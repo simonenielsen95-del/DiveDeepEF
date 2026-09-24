@@ -1,0 +1,23 @@
+﻿@model List<DiveDeepEF.Models.Equipments.Fin>
+
+<title>Finner</title>
+
+<div class="row">
+    @foreach (var group in Model.GroupBy(x => new { x.Brand, x.Model }))
+    {
+        var product = group.First();
+
+        <div class="card" style="width: 18rem; margin: 10px;">
+            <img src="/Image/deep-dive.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">(A)product.Model</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">@product.Brand</h6>
+                <!--Skift attributeID
+                <p class="card-text">(A)product.AttributeId </p>
+                -->
+                <h6 class="card-text">(A)product.PricePerDay Dkk om dagen</h6>
+                <a asp-area="" asp-controller="Booking" asp-action="Index" asp-route-type="Fins" asp-route-id="@product.Id" class="btn btn-primary">Læs mere</a>
+            </div>
+        </div>
+    }
+</div>

@@ -3,43 +3,78 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DiveDeepEF</title>
+    <title>@ViewData["Title"] - Dive_Deep</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DiveDeepEF.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Dive_Deep.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DiveDeepEF</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+        <nav id="menu">
+            <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">
+                <img style="float: inline-start; width:80px;" src="/image/logo.png" alt="logo">
+            </a>
+            <a asp-controller="Basket" asp-action="Index">
+                <img style="float:inline-end; width:80px;" src="/image/kurv.png" alt="kurv">
+            </a>
+            <div>
+                <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
+                <div class="dropdown">
+                    <a class="navtext" asp-area="" asp-controller="Product" asp-action="Equipment">Udstyr ⮟</a>
+                    <div class="dropdown-content">
+                        <a asp-area="" asp-controller="" asp-action="">Link 1</a>
+                        <a asp-area="" asp-controller="" asp-action="">Link 2</a>
+                        <a asp-area="" asp-controller="" asp-action="">Link 3</a>
+                    </div>
                 </div>
+                <a class="navtext" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <a class="navtext" asp-area="" asp-controller="Home" asp-action="About">Om Os</a>
+                <a class="navtext" asp-area="" asp-controller="Home" asp-action="Weather">Vejret</a>
+                <a class="navtext" asp-area="" asp-controller="Account" asp-action="Admin">Admin</a>
+                <a class="navtext" asp-area="" asp-controller="Account" asp-action="Login">Login/Opret Bruger</a>
+                <a class="navtext" asp-area="" asp-controller="Account" asp-action="User_Profile">Profil</a>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - DiveDeepEF - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </header>       
+    <div>
+        <div>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <div style="height:150px;"></div>
+
+    <footer>
+        <div class="child" style="align-content: center; padding-left: 40px;">
+            <a href="">
+                <img src="/image/facebook.png" alt="facebook">
+            </a>
+            <a href="">
+                <img src="/image/instagram.png" alt="instagram">
+            </a>
+        </div>
+        <div>
+            <p> <span class="footerBold">Adresse:</span> Dykkervej 10, 5000 Odense C</p>
+            <br>
+            <p> <span class="footerBold">CVR-nummer::</span> 81828384</p>
+            <br>
+            <p> <span class="footerBold">Telefonnummer:</span> +45 60708090</p>
+            <br>
+            <p> <span class="footerBold">E-mail::</span> info@divedeep.dk</p>
+        </div>
+        <div style="padding-right: 10vw;">
+            <p class="footerBold">Åbningstider</p>
+            <br/>
+            <ul>
+                <li> <span class="footerBold">Mandag-fredag:</span> 10:00-17:30</li>
+                <br>
+                <li> <span class="footerBold">Lørdag:</span> 10:00-14:00</li>
+                <br>
+                <li> <span class="footerBold">Søndag</span> Lukket</li>
+            </ul>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

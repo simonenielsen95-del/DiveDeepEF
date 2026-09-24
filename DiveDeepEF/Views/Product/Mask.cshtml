@@ -1,0 +1,16 @@
+﻿<title>Masker</title>
+
+<div class="row">
+    @foreach (var mask in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@mask.Model</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">@mask.Brand</h6>
+                <h6 class="card-text">@mask.PricePerDay Dkk om dagen</h6>
+                <a href="#" class="btn btn-primary">Læs mere</a>
+            </div>
+        </div>
+    }
+</div>

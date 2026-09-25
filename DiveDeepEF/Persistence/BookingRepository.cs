@@ -11,6 +11,9 @@ namespace DiveDeepEF.Persistence
         {
             return bookings;
         }
+
+        public static Booking? GetById(int id) => bookings.FirstOrDefault(x => x.Id == id);
+
         public static void Add(Booking booking)
         {
             if (booking == null) return;
@@ -18,5 +21,22 @@ namespace DiveDeepEF.Persistence
             bookings.Add(booking);
         }
 
+        public static void Delete(int id)
+        {
+            bookings.RemoveAll(x => x.Id == id);
+        }
+
+        public static void Update(int id, Booking booking)
+        {
+            var target = GetById(id);
+            if (target != null && booking != null)
+            {
+                target.CostumerName = booking.CostumerName;
+                target.CostumerEmail = booking.CostumerEmail;
+                target.StartDate = booking.StartDate;
+                target.EndDate = booking.EndDate;
+                target.BasketItems = booking.BasketItems;
+            }
+        }
     }
 }

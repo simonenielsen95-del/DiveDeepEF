@@ -1,4 +1,5 @@
 ﻿using DiveDeepEF.Models.Bookings;
+using DiveDeepEF.Models.Equipments;
 
 namespace DiveDeepEF.Persistence
 {
@@ -10,17 +11,22 @@ namespace DiveDeepEF.Persistence
         {
             return items;
         }
+
+        public static BasketItem? GetById(int id) => items.FirstOrDefault(x => x.Id == id);
+
         public static void Add(BasketItem item)
         {
             items.Add(item);
         }
-        public static void Remove(int index)
+        public static void Delete(int id)
         {
-            if (index >= 0 && index < items.Count)
-            {
-                items.RemoveAt(index);
-            }
+            items.RemoveAll(x => x.Id == id);
+            //if (index >= 0 && index < items.Count)
+            //{
+            //    items.RemoveAt(index);
+            //}
         }
+
 
     }
 }

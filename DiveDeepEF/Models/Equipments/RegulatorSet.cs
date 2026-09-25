@@ -2,7 +2,7 @@
 
 namespace DiveDeepEF.Models.Equipments
 {
-    public class RegulatorSet
+    public class RegulatorSet : Equipment
     {      
         public string FirstStage { get; set; }
         public string SecondStage { get; set; }

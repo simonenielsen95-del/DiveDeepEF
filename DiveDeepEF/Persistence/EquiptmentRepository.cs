@@ -9,7 +9,7 @@ namespace DiveDeepEF.Persistence
             return category.ToLower() switch
             {
                 "fin" => FinsRepository.GetById(id),
-                "bcd" => BcdRepository.GetById(id),
+                "bcd" => BCDRepository.GetById(id),
                 "mask" => MaskRepository.GetById(id),
                 "regulator" => RegulatorSetRepository.GetById(id),
                 "suit" => SuitRepository.GetById(id),

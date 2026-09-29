@@ -1,9 +1,10 @@
 ﻿using DiveDeepEF.Models.Bookings;
 using DiveDeepEF.Models.Equipments;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace DiveDeepEF.Data
 {
-    public class DiveDeepEFContext : DbContext
+    public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
     {
         public DiveDeepEFContext(DbContextOptions<DiveDeepEFContext> options)
             : base(options)

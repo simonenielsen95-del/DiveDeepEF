@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using DiveDeepEF.Data;
 namespace DiveDeepEF
 {
     public class Program
@@ -5,6 +8,11 @@ namespace DiveDeepEF
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connectionString = builder.Configuration.GetConnectionString("DiveDeepEFContextConnection") ?? throw new InvalidOperationException("Connection string 'DiveDeepEFContextConnection' not found.");;
+
+            builder.Services.AddDbContext<DiveDeepEFContext>(options => options.UseSqlServer(connectionString));
+
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepEFContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -22,7 +30,9 @@ namespace DiveDeepEF
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.MapRazorPages();
 
             app.MapStaticAssets();
             app.MapControllerRoute(

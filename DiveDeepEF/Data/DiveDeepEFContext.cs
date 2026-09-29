@@ -16,6 +16,15 @@ namespace DiveDeepEF.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            // ApplicationUser 1 ─── mange Bookings
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.User)
+                .WithMany(u => u.Bookings)
+                .HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Booking 1 ─── mange BasketItems
             modelBuilder.Entity<BasketItem>()
                 .HasOne(bi => bi.Booking)

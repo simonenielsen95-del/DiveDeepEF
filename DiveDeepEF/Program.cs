@@ -8,7 +8,7 @@ namespace DiveDeepEF
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("DiveDeepEFContextConnection") ?? throw new InvalidOperationException("Connection string 'DiveDeepEFContextConnection' not found.");;
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");;
 
             builder.Services.AddDbContext<DiveDeepEFContext>(options => options.UseSqlServer(connectionString));
 

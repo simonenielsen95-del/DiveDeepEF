@@ -1,5 +1,6 @@
 ﻿using DiveDeepEF.Models.Equipments;
 using System.ComponentModel.DataAnnotations.Schema;
+using DiveDeepEF.Data;
 
 namespace DiveDeepEF.Models.Bookings
 {
@@ -10,6 +11,11 @@ namespace DiveDeepEF.Models.Bookings
         public string CostumerEmail { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+
+        // til identity-forhold
+        public string? UserId { get; set; }
+        public ApplicationUser? User { get; set; }
 
         public List<BasketItem> BasketItems { get; set; } = new();
 

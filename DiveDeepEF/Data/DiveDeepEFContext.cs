@@ -18,6 +18,10 @@ namespace DiveDeepEF.Data
         {
             base.OnModelCreating(modelBuilder);
 
+             modelBuilder.Entity<Booking>()
+            .Property(b => b.RowVersion)
+            .IsRowVersion();
+
             // ApplicationUser 1 ─── mange Bookings
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User)

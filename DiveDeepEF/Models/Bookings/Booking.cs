@@ -1,6 +1,7 @@
-﻿using DiveDeepEF.Models.Equipments;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DiveDeepEF.Data;
+using DiveDeepEF.Models.Equipments;
 
 namespace DiveDeepEF.Models.Bookings
 {
@@ -12,6 +13,7 @@ namespace DiveDeepEF.Models.Bookings
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public byte[]? RowVersion { get; set; }
 
         // til identity-forhold
         public string? UserId { get; set; }

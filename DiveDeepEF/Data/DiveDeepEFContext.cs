@@ -51,49 +51,49 @@ namespace DiveDeepEF.Data
                 );
             modelBuilder.Entity<Fins>().HasData
                (
-                   new Fins { Id = 1, Brand = "Scubapro", Model = "Jet Fin", Size = "XS, S, M, L, XL", PricePerDay = 50 },
-                   new Fins { Id = 2, Brand = "Scubapro", Model = "GO Travel", Size = "XS, S, M, L, XL", PricePerDay = 50 },
-                   new Fins { Id = 3, Brand = "Scubapro", Model = "Seawing Supernova", Size = "XS, S, M, L, XL", PricePerDay = 60 },
-                   new Fins { Id = 4, Brand = "Seac", Model = "Propulsion", Size = "XS, S, M, L, XL", PricePerDay = 50 },
-                   new Fins { Id = 5, Brand = "Seac", Model = "ALA", Size = "XS, S, M, L, XL", PricePerDay = 50 },
-                   new Fins { Id = 6, Brand = "Fourth Element", Model = "Tech", Size = "XS, S, M, L, XL", PricePerDay = 75 },
-                   new Fins { Id = 7, Brand = "Fourth Element", Model = "Rec Fin", Size = "XS, S, M, L, XL", PricePerDay = 80 }
+                   new Fins { Id = 5, Brand = "Scubapro", Model = "Jet Fin", Size = "XS, S, M, L, XL", PricePerDay = 50 },
+                   new Fins { Id = 6, Brand = "Scubapro", Model = "GO Travel", Size = "XS, S, M, L, XL", PricePerDay = 50 },
+                   new Fins { Id = 7, Brand = "Scubapro", Model = "Seawing Supernova", Size = "XS, S, M, L, XL", PricePerDay = 60 },
+                   new Fins { Id = 8, Brand = "Seac", Model = "Propulsion", Size = "XS, S, M, L, XL", PricePerDay = 50 },
+                   new Fins { Id = 9, Brand = "Seac", Model = "ALA", Size = "XS, S, M, L, XL", PricePerDay = 50 },
+                   new Fins { Id = 10, Brand = "Fourth Element", Model = "Tech", Size = "XS, S, M, L, XL", PricePerDay = 75 },
+                   new Fins { Id = 11, Brand = "Fourth Element", Model = "Rec Fin", Size = "XS, S, M, L, XL", PricePerDay = 80 }
                );
             modelBuilder.Entity<Mask>().HasData
                 (
-                    new Mask { Id = 1, Brand = "Scubapro", Model = "Ghost", PricePerDay = 50 },
-                    new Mask { Id = 2, Brand = "Scubapro", Model = "D-Mask", PricePerDay = 60 },
-                    new Mask { Id = 3, Brand = "Scubapro", Model = "Spectra Mini", PricePerDay = 50 },
-                    new Mask { Id = 4, Brand = "Scubapro", Model = "Crystal VU", PricePerDay = 75 },
-                    new Mask { Id = 6, Brand = "Fourth Element", Model = "Scout Enhance", PricePerDay = 75 },
-                    new Mask { Id = 7, Brand = "Tusa", Model = "Element", PricePerDay = 75 }
+                    new Mask { Id = 12, Brand = "Scubapro", Model = "Ghost", PricePerDay = 50 },
+                    new Mask { Id = 13, Brand = "Scubapro", Model = "D-Mask", PricePerDay = 60 },
+                    new Mask { Id = 14, Brand = "Scubapro", Model = "Spectra Mini", PricePerDay = 50 },
+                    new Mask { Id = 15, Brand = "Scubapro", Model = "Crystal VU", PricePerDay = 75 },
+                    new Mask { Id = 16, Brand = "Fourth Element", Model = "Scout Enhance", PricePerDay = 75 },
+                    new Mask { Id = 17, Brand = "Tusa", Model = "Element", PricePerDay = 75 }
 
                 );
             modelBuilder.Entity<RegulatorSet>().HasData
                 (
-                    new RegulatorSet { Id = 1, Brand = "Scubapro", FirstStage = "MK25 EVO", SecondStage = "S600", Octopus = "R105", PricePerDay = 125 },
-                    new RegulatorSet { Id = 2, Brand = "Scubapro", FirstStage = "MK17 EVO", SecondStage = "C370", Octopus = "R095", PricePerDay = 100 },
-                    new RegulatorSet { Id = 3, Brand = "Scubapro", FirstStage = "MK25 EVO BT", SecondStage = "A700 Carbon BT", Octopus = "S270", PricePerDay = 150 }
+                    new RegulatorSet { Id = 18, Brand = "Scubapro", FirstStage = "MK25 EVO", SecondStage = "S600", Octopus = "R105", PricePerDay = 125 },
+                    new RegulatorSet { Id = 19, Brand = "Scubapro", FirstStage = "MK17 EVO", SecondStage = "C370", Octopus = "R095", PricePerDay = 100 },
+                    new RegulatorSet { Id = 20, Brand = "Scubapro", FirstStage = "MK25 EVO BT", SecondStage = "A700 Carbon BT", Octopus = "S270", PricePerDay = 150 }
 
                 );
             modelBuilder.Entity<Suit>().HasData
                 (
-                    new Suit { Id = 1, Brand = "Scubapro", Model = "Definition", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 3, PricePerDay = 100 },
-                    new Suit { Id = 2, Brand = "Scubapro", Model = "Definition", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 5, PricePerDay = 100 },
-                    new Suit { Id = 3, Brand = "Scubapro", Model = "Definition", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 7, PricePerDay = 100 },
-                    new Suit { Id = 4, Brand = "Waterproof", Model = "W5", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 3.5, PricePerDay = 100 },
-                    new Suit { Id = 5, Brand = "Fourth Element", Model = "Proteus", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 5, PricePerDay = 120 },
-                    new Suit { Id = 6, Brand = "Scubapro", Model = "Exodry 4.0", Size = "XS, S, M, L, XL", Type = "Drysuit", Gender = "Men/Women", Thickness = null, PricePerDay = 300 },
-                    new Suit { Id = 7, Brand = "Waterproof", Model = "D7 Evo", Size = "XS, S, M, L, XL", Type = "Drysuit", Gender = "Men/Women", Thickness = null, PricePerDay = 320 },
-                    new Suit { Id = 8, Brand = "Santi", Model = "E.Lite Plus", Size = "XS, S, M, L, XL", Type = "Drysuit", Gender = "Men/Women", Thickness = null, PricePerDay = 350 }
+                    new Suit { Id = 21, Brand = "Scubapro", Model = "Definition", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 3, PricePerDay = 100 },
+                    new Suit { Id = 22, Brand = "Scubapro", Model = "Definition", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 5, PricePerDay = 100 },
+                    new Suit { Id = 23, Brand = "Scubapro", Model = "Definition", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 7, PricePerDay = 100 },
+                    new Suit { Id = 24, Brand = "Waterproof", Model = "W5", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 3.5, PricePerDay = 100 },
+                    new Suit { Id = 25, Brand = "Fourth Element", Model = "Proteus", Size = "XS, S, M, L, XL", Type = "Wetsuit", Gender = "Men/Women", Thickness = 5, PricePerDay = 120 },
+                    new Suit { Id = 26, Brand = "Scubapro", Model = "Exodry 4.0", Size = "XS, S, M, L, XL", Type = "Drysuit", Gender = "Men/Women", Thickness = null, PricePerDay = 300 },
+                    new Suit { Id = 27, Brand = "Waterproof", Model = "D7 Evo", Size = "XS, S, M, L, XL", Type = "Drysuit", Gender = "Men/Women", Thickness = null, PricePerDay = 320 },
+                    new Suit { Id = 28, Brand = "Santi", Model = "E.Lite Plus", Size = "XS, S, M, L, XL", Type = "Drysuit", Gender = "Men/Women", Thickness = null, PricePerDay = 350 }
 
                 );
             modelBuilder.Entity<Tank>().HasData
                 (
-                    new Tank { Id = 1, Brand = "Scubapro", Volume = 5, PricePerDay = 150 },
-                    new Tank { Id = 2, Brand = "Scubapro", Volume = 10, PricePerDay = 160 },
-                    new Tank { Id = 3, Brand = "Scubapro", Volume = 12, PricePerDay = 170 },
-                    new Tank { Id = 4, Brand = "Scubapro", Volume = 15, PricePerDay = 180 }
+                    new Tank { Id = 29, Brand = "Scubapro", Volume = 5, PricePerDay = 150 },
+                    new Tank { Id = 30, Brand = "Scubapro", Volume = 10, PricePerDay = 160 },
+                    new Tank { Id = 31, Brand = "Scubapro", Volume = 12, PricePerDay = 170 },
+                    new Tank { Id = 32, Brand = "Scubapro", Volume = 15, PricePerDay = 180 }
 
                 );
 

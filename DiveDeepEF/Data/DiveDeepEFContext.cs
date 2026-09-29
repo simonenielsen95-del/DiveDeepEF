@@ -40,6 +40,7 @@ namespace DiveDeepEF.Data
             modelBuilder.Entity<Equipment>()
                 .HasDiscriminator<string>("EquipmentType");
 
+            // Tilføjer mockdata
             modelBuilder.Entity<BCD>().HasData
                 (
                     new BCD { Id = 1, Brand = "Scubapro", Model = "Navigator Lite", Size = "S, M, L", PricePerDay = 125 },

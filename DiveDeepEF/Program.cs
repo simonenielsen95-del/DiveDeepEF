@@ -14,6 +14,12 @@ namespace DiveDeepEF
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepEFContext>();
 
+            builder.Services.AddDbContext<DiveDeepEFContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 

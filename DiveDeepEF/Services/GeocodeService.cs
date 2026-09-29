@@ -1,15 +1,16 @@
-﻿using Weather_website.Models;
+﻿using DiveDeepEF.Models.Weather;
+using DiveDeepEF.Interfaces;
 using System.Globalization;
 
-namespace Weather_website.Services
+namespace DiveDeepEF.Services
 {
 
 
-    public class Geocode : IGeocode
+    public class GeocodeService : IGeocode
     {
         private readonly IHttpClientFactory _httpClient;
 
-        public Geocode(IHttpClientFactory httpClient)
+        public GeocodeService(IHttpClientFactory httpClient)
         {
             _httpClient = httpClient;
         }
@@ -19,9 +20,11 @@ namespace Weather_website.Services
             var client = _httpClient.CreateClient();
 
             client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
+            
             var infoList = await client.GetFromJsonAsync<GeocodeWrapper>(
                 $"{client.BaseAddress}search?name={city}&format=json"
             );
+            
             if (infoList == null || infoList.results.Count() == 0)
             { 
                 return null;

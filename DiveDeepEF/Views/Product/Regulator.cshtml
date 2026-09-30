@@ -1,0 +1,18 @@
+﻿<title>Regulatore</title>
+
+<div class="row">
+    @foreach (var reg in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@reg.Brand</h5>
+                <p class="card-text">@reg.FirstStage</p>
+                <p class="card-text">@reg.SecondStage </p>
+                <p class="card-text">@reg.Octopus</p>
+                <h6 class="card-text">@reg.PricePerDay Dkk om dagen</h6>
+                <a href="#" class="btn btn-primary">Læs mere</a>
+            </div>
+        </div>
+    }
+</div>

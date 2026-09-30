@@ -1,0 +1,187 @@
+﻿@model List<DiveDeepEF.Models.Equipments.Equipment>
+@using DiveDeepEF.Models.Equipments
+
+@{
+    var product = Model.First();
+
+    string type = product.GetType().Name;
+}
+
+<main style="text-align: center;">
+    <form asp-controller="Basket" asp-action="Add" method="post">
+
+        <input type="hidden" id="equipmentId" name="EquipmentId" value="@product.Id" />
+        <input type="hidden" name="EquipmentType" value="@type" />
+        <input type="hidden" id="pricePerDay" value="@product.PricePerDay.ToString()" />
+
+        <div style="display:inline-flex; text-align:left; gap:50px;">
+            <!-- Produkt 
+            <div>
+                <img style="width:200px;" src="/Image/deep-dive.png" alt="(A)product.Model">
+                <h2>(A)product.Model</h2>
+                <h5>(A)product.Brand</h5>
+                <label for="attributeId">Størrelse:</label>
+                <select id="attributeId" name="AttributeId" onchange="refreshAvailableAmount()">
+                     (A)foreach (var variant in Model.GroupBy(x => x.AttributeId).Select(y => y.First()))
+                    {
+                        var attribute = EquipmentAttributeRepo.GetById(variant.AttributeId ?? 0);
+
+                        if (attribute != null)
+                        {
+                            <option value="(A)variant.AttributeId" data-id="(A)variant.Id" data-quantity="(A)variant.Quantity">
+                                (A)(attribute.Name)
+                            </option>
+                        }
+                    }
+                </select>
+                <h4>
+                    (A)product.PricePerDay Kr pr. dag
+                </h4>
+            </div>
+            -->
+            <!-- Booking -->
+            <div>
+                <div>
+                    <label for="amount">
+                        <strong>Mængde</strong>
+                    </label>
+                    <select id="amount" name="Amount" onchange="calculateTotal()">
+                    </select>
+                    <p id="availability"></p>
+
+                </div>
+                <br />
+                <div>
+                    <label for="startDate">
+                        <strong>Fra</strong>
+                    </label>
+                    <input type="date" id="startDate" name="StartDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="refreshAvailableAmount()" required />
+                </div>
+                <br />
+                <div>
+                    <label for="endDate">
+                        <strong>Til</strong>
+                    </label>
+                    <input type="date" id="endDate" min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" name="EndDate" onchange="refreshAvailableAmount()" required />
+                </div>
+                <br />
+                <div>
+                    <p>
+                        Antal dage: <span id="numberOfDays">0</span>
+                    </p>
+                    <h3>
+                        Total: <span id="total">0</span> kr
+                    </h3>
+                </div>
+                <a asp-controller="Product" asp-action="@ViewBag.Type" class="btn btn-secondary">
+                    Tilbage
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    Tilføj til kurv
+                </button>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script>
+    //async kan køre anden kode mens Credential venter på at køre færdig   
+    async function refreshAvailableAmount() {
+        const attributeSelect = document.getElementById("attributeId");
+        const selectedOption = attributeSelect.options[attributeSelect.selectedIndex];
+
+        if (!selectedOption) return;
+
+        const totalQuantity = Number(selectedOption.dataset.quantity);
+        const equipmentId = selectedOption.dataset.id;
+
+        //document ind i webpage
+        document.getElementById("equipmentId").value = equipmentId;
+
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        const availability = document.getElementById("availability");
+
+        // let værdi der kan ændres
+        let remaining = totalQuantity;
+        //gør felt tom
+        availability.textContent = "";
+
+        //kan kun tjekke reelt ledigt antal når begge datoer er valgt
+        if (startDate && endDate)
+        {
+            try
+            {
+                //await venter på HTTP request 
+                //fetch laver HTTP request.                
+                const response = await fetch(`/Booking/Reserved?equipmentId=${equipmentId}&startDate=${startDate}&endDate=${endDate}`);
+
+                if (response.ok)
+                {
+                    //json læser til tekst
+                    const data = await response.json();
+                    // tager amount og minuser med reserved
+                    remaining = Math.max(0, totalQuantity - data.reserved);
+                }
+             } catch (e) {
+             }
+        }
+
+        const amountSelect = document.getElementById("amount");
+        const previousValue = Number(amountSelect.value);
+
+        amountSelect.innerHTML = "";
+
+        for (let i = 1; i <= remaining; i++) {
+            const option = document.createElement("option");
+
+            option.value = i;
+            option.textContent = i;
+            //nyt valg i dropdown
+            amountSelect.appendChild(option);
+        }
+
+        if (remaining === 0) {
+            availability.textContent = "Ikke tilgængelig i den valgte periode.";
+        } else if (previousValue > 0 && previousValue <= remaining) {
+            amountSelect.value = previousValue;
+        }
+
+        calculateTotal();
+    }
+    refreshAvailableAmount();
+
+    function calculateTotal() { 
+        //number laver string om til number
+        const amount = Number(document.getElementById("amount").value);
+        const price = Number(document.getElementById("pricePerDay").value);
+
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        //ingen start/slut dato
+        if (!startDate || !endDate) {
+            document.getElementById("numberOfDays").innerText = "0";
+            document.getElementById("total").innerText = "0.00";
+            return;
+        }
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        //js regner i ms defor dividere meget
+        const days = Math.round((end - start) / 86400000);
+
+        //0 dage eller mindre
+        if (days <= 0) {
+            document.getElementById("numberOfDays").innerText = "0";
+            document.getElementById("total").innerText = "0.00";
+            return;
+        }
+
+        const total = amount * price * days;
+
+        document.getElementById("numberOfDays").innerText = days;
+        // 2 decimaler
+        document.getElementById("total").innerText = total.toFixed(2);
+    }
+</script>

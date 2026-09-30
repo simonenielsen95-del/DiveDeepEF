@@ -2,9 +2,19 @@
 using DiveDeepEF.Models.Equipments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-namespace DiveDeepEF.Data
+namespace DiveDeepEF.Data;
+
+public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
 {
-    public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
+    public DiveDeepEFContext(DbContextOptions<DiveDeepEFContext> options)
+        : base(options)
+    { }
+
+    public DbSet<Booking> Bookings { get; set; } = null!;
+    public DbSet<BasketItem> BasketItems { get; set; } = null!;
+    public DbSet<Equipment> Equipment { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         public DiveDeepEFContext(DbContextOptions<DiveDeepEFContext> options)
             : base(options)

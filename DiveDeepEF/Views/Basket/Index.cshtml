@@ -1,0 +1,17 @@
+﻿@using DiveDeepEF.Models.Bookings
+@model List<Booking>
+
+<main>
+    <h1>Din kurv</h1>
+    @if (!Model.Any())
+    {
+        <h3>Din kurv er tom.</h3>
+        <a asp-controller="Product" asp-action="Udstyr" class="btn btn-primary">
+            Se udstyr
+        </a>
+    }
+
+    <button class="btn btn-primary">
+        Gå til betaling
+    </button>
+</main>

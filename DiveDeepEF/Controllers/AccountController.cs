@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
-using DiveDeepEF.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using DiveDeepEF.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace DiveDeepEF.Controllers
 {
@@ -12,5 +11,22 @@ namespace DiveDeepEF.Controllers
         {
             return View();
         }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+        public IActionResult User_Profile()
+        {
+            return View();
+        }
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using DiveDeepEF.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiveDeepEF.Migrations
 {
     [DbContext(typeof(DiveDeepEFContext))]
-    partial class DiveDeepEFContextModelSnapshot : ModelSnapshot
+    [Migration("20260929122622_IdentityAdded")]
+    partial class IdentityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,9 +73,6 @@ namespace DiveDeepEF.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -86,8 +86,6 @@ namespace DiveDeepEF.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -134,20 +132,10 @@ namespace DiveDeepEF.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
                 });
@@ -720,15 +708,6 @@ namespace DiveDeepEF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DiveDeepEF.Data.ApplicationUser", b =>
-                {
-                    b.HasOne("DiveDeepEF.Data.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DiveDeepEF.Models.Bookings.BasketItem", b =>
                 {
                     b.HasOne("DiveDeepEF.Models.Bookings.Booking", "Booking")
@@ -746,16 +725,6 @@ namespace DiveDeepEF.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("Equipment");
-                });
-
-            modelBuilder.Entity("DiveDeepEF.Models.Bookings.Booking", b =>
-                {
-                    b.HasOne("DiveDeepEF.Data.ApplicationUser", "User")
-                        .WithMany("Bookings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -807,11 +776,6 @@ namespace DiveDeepEF.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DiveDeepEF.Data.ApplicationUser", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("DiveDeepEF.Models.Bookings.Booking", b =>

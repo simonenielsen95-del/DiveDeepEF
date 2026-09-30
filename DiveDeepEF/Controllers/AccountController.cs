@@ -4,8 +4,13 @@ using System.Diagnostics;
 
 namespace DiveDeepEF.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             return View();

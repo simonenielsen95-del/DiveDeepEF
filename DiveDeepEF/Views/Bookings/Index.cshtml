@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DiveDeepEF.Models.Bookings.Booking>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "My Bookings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<h1>@(isAdmin ? "All Bookings" : "My Bookings")</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Booking</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CostumerName)</th>
+            <th>@Html.DisplayNameFor(model => model.CostumerEmail)</th>
+            @if (isAdmin)
+            {
+                <th>Booked by</th>
+            }
+            <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+            <th>@Html.DisplayNameFor(model => model.EndDate)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.CostumerName)</td>
+                <td>@Html.DisplayFor(modelItem => item.CostumerEmail)</td>
+                @if (isAdmin)
+                {
+                    <td>@(item.User?.Email ?? "-")</td>
+                }
+                <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

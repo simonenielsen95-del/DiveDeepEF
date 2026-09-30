@@ -1,4 +1,4 @@
-﻿namespace Weather_website.Services
+﻿namespace DiveDeepEF.Interfaces
 {
     public interface IGeocode
     {

@@ -1,17 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DiveDeepEF.Data;
+using DiveDeepEF.Models.Equipments;
+using Microsoft.AspNetCore.Mvc;
 
-namespace DiveDeepEF.Controllers
+namespace DiveDeepEF.Controllers;
+
+public class ProductController : Controller
 {
-    public class ProductController : Controller
+    private readonly DiveDeepEFContext repo;
+
+    public ProductController(DiveDeepEFContext diveDeepEFContext)
     {
-        public IActionResult Equipment() => View();
-        /* linker ikke lige nu da der ikke er repo, flyt som repo er added
-            public IActionResult Fins() => View(FinsRepository.GetAll());
-            public IActionResult BCD() => View(BcdRepository.GetAll());
-            public IActionResult Mask() => View(MaskRepository.GetAll());
-            public IActionResult Regulator() => View(RegulatorSetRepository.GetAll());
-            public IActionResult Suit() => View(SuitRepository.GetAll());
-            public IActionResult Tank() => View(TankRepository.GetAll());
-        */
+
+        repo = diveDeepEFContext;
+
     }
+
+    public IActionResult Equipment() => View(repo.Equipment);
+    public IActionResult Fins() => View(repo.Equipment.Where(e => e is Fins));
+    public IActionResult BCD() => View(repo.Equipment.Where(e => e is BCD));
+    public IActionResult Mask() => View(repo.Equipment.Where(e => e is Mask));
+    public IActionResult Regulator() => View(repo.Equipment.Where(e => e is RegulatorSet));
+    public IActionResult Suit() => View(repo.Equipment.Where(e => e is Suit));
+    public IActionResult Tank() => View(repo.Equipment.Where(e => e is Tank));
+
 }

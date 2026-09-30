@@ -1,0 +1,65 @@
+﻿@model List<DiveDeepEF.Models.Bookings.BookingItem>
+
+<main>
+    <h1>Din kurv</h1>
+    @if (!Model.Any())
+    {
+        <h3>Din kurv er tom.</h3>
+        <a asp-controller="Product" asp-action="Udstyr" class="btn btn-primary">
+            Se udstyr
+        </a>
+    }
+    <!--
+    else
+    {
+        foreach (var item in Model.Select((value, index) => new { value, index }))
+        {
+            
+            var attribute = EquipmentAttributeRepo.GetById(item.value.AttributeId ?? 0);
+
+            <div style="display:flex; align-items:center; padding:20px;">
+                <div style="text-align:left;">
+                    <h3>(A)item.value.Brand (A)item.value.Model</h3>
+                    <p>
+                        Antal: (A)item.value.Amount
+                    </p>
+                    (A)if (attribute != null)
+                    {
+                        <p>
+                                (A)(attribute.Name)
+                        </p>
+                    }
+                    <p>
+                        Fra: (A)item.value.StartDate.ToString("dd/MM/yyyy")
+                    </p>
+                    <p>
+                        Til: (A)item.value.EndDate.ToString("dd/MM/yyyy")
+                    </p>
+                    <p>
+                        (A)item.value.NumberOfDays dage
+                    </p>
+                </div>
+                <div>
+                    <h3>
+                        (A)item.value.Total.ToString("0.00") Kr
+                    </h3>
+                    <form asp-action="Remove" method="post">
+                        <input type="hidden" name="index" value="(A)item.index"/>
+                        <button type="submit" class="btn btn-danger">
+                            Fjern
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+        <hr />
+        <h2>
+            Total: (A)Model.Sum(x => x.Total).ToString("0.00") Kr
+        </h2>
+        -->
+        //gør ikke noget
+        <button class="btn btn-primary">
+            Gå til betaling
+        </button>
+    }
+</main>

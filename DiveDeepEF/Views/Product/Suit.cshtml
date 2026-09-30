@@ -1,0 +1,18 @@
+﻿<title>Dragter</title>
+
+<div class="row">
+    @foreach (var suit in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@suit.Model</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">@suit.Brand</h6>
+                <p class="card-text">@suit.Sizes </p>
+                <p class="card-text">@suit.Type  @suit.Gender  @suit.Thickness</p>
+                <h6 class="card-text">@suit.PricePerDay Dkk om dagen</h6>
+                <a href="#" class="btn btn-primary">Læs mere</a>
+            </div>
+        </div>
+    }
+</div>

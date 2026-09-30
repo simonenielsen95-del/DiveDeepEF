@@ -4,7 +4,7 @@ using DiveDeepEF.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DiveDeepEFContextConnection") ?? throw new KeyNotFoundException("Connection string 'DiveDeepEFContextConnection' not found."); ;
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new KeyNotFoundException("Connection string 'DefaultConnection' not found."); ;
 
 builder.Services.AddDbContext<DiveDeepEFContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepEFContext>();

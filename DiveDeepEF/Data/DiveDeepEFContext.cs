@@ -16,6 +16,8 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         // Booking 1 ─── mange BasketItems
         modelBuilder.Entity<BasketItem>()
             .HasOne(bi => bi.Booking)

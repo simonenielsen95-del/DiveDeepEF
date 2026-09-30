@@ -1,70 +1,72 @@
 using DiveDeepEF.Data;
 using DiveDeepEF.Interfaces;
 using DiveDeepEF.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new KeyNotFoundException("Connection string 'DefaultConnection' not found."); ;
-
-builder.Services.AddDbContext<DiveDeepEFContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepEFContext>();
-builder.Services.AddDbContext<DiveDeepEFContext>(options =>
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+        builder.Services.AddDbContext<DiveDeepEFContext>(options =>
+            options.UseSqlServer(connectionString));
+
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+                options.SignIn.RequireConfirmedAccount = false)
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<DiveDeepEFContext>();
+
+        // Egne services
+        builder.Services.AddScoped<IWeatherService, WeatherService>();
+        builder.Services.AddScoped<IGeocode, GeocodeService>();
+        builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+
+        // HttpClient-konfiguration
+        builder.Services.AddHttpClient("WeatherForecastAPI", client =>
         {
-            var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");;
+            client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
+        });
 
+        builder.Services.AddHttpClient("MarineAPI", client =>
+        {
+            client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/");
+        });
 
-builder.Services.AddScoped<IWeatherService, WeatherService>();
-builder.Services.AddScoped<IGeocode, GeocodeService>();
-builder.Services.AddScoped<IRecommendationService, RecommendationService>();
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<DiveDeepEFContext>();
+        builder.Services.AddHttpClient("GeocodingAPI", client =>
+        {
+            client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
+            client.DefaultRequestHeaders.Add("User-Agent", builder.Configuration["GEOCODE_API_REQUEST_HEADER"]);
+        });
 
-builder.Services.AddHttpClient("WeatherForecastAPI", client =>
-{
-    client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
-});
+        builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient("MarineAPI", client =>
-{
-    client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/");
-});
+        var app = builder.Build();
 
-builder.Services.AddHttpClient("GeocodingAPI", client =>
-{
-    client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
-    client.DefaultRequestHeaders.Add("User-Agent", builder.Configuration["GEOCODE_API_REQUEST_HEADER"]);
-});
+       
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+        app.UseHttpsRedirection();
+        app.UseRouting();
 
-var app = builder.Build();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+        app.MapRazorPages();
+        app.MapStaticAssets();
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}")
+            .WithStaticAssets();
+
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapRazorPages();
-
-app.MapStaticAssets();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
-app.Run();

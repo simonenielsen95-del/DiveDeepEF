@@ -1,6 +1,10 @@
+using DiveDeepEF.Data;
+using DiveDeepEF.Interfaces;
+using DiveDeepEF.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using DiveDeepEF.Data;
+using DiveDeepEF.Models.Weather;
+
 namespace DiveDeepEF
 {
     public class Program
@@ -19,6 +23,26 @@ namespace DiveDeepEF
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+
+            builder.Services.AddScoped<IWeatherService, WeatherService>();
+            builder.Services.AddScoped<IGeocode, GeocodeService>();
+            builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+
+            builder.Services.AddHttpClient("WeatherForecastAPI", client =>
+            {
+                client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
+            });
+
+            builder.Services.AddHttpClient("MarineAPI", client =>
+            {
+                client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/");
+            });
+
+            builder.Services.AddHttpClient("GeocodingAPI", client =>
+            {
+                client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
+                client.DefaultRequestHeaders.Add("User-Agent", builder.Configuration["GEOCODE_API_REQUEST_HEADER"]);
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

@@ -1,4 +1,4 @@
-﻿namespace Weather_website.Models;
+﻿namespace DiveDeepEF.Models.Weather;
 
  public class GeocodeModel
     {

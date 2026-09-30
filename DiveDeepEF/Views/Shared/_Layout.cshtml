@@ -12,6 +12,7 @@
 <body>
     <header>
         <nav id="menu">
+                <partial name="_LoginPartial" />
             <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">
                 <img style="float: inline-start; width:80px;" src="/image/logo.png" alt="logo">
             </a>
@@ -29,7 +30,6 @@
                     </div>
                 </div>
                 <a class="navtext" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-              <partial name="_LoginPartial" />
                 <a class="navtext" asp-area="" asp-controller="Home" asp-action="About">Om Os</a>
                 <a class="navtext" asp-area="" asp-controller="Home" asp-action="Weather">Vejret</a>
 

@@ -4,10 +4,23 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
-#mainbaggrund {
-    background-image: url("/image/background.png");
-    background-repeat: no-repeat;
-    background-size: 100% auto;
+    body#mainbaggrund {
+        margin: 0;
+        padding: 0;
+        background-image: url("/image/background.png");
+        background-repeat: no-repeat;
+        background-size: cover; 
+        background-position: top center; 
+        background-attachment: scroll;
+    }
+
+header, nav {
+    margin-bottom: 0;
+}
+
+main {
+    margin-top: 0;
+    padding-top: 0;
 }
 
 main {

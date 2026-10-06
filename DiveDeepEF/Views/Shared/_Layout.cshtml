@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="~/DiveDeepEF.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
         <header>
             <nav id="menu" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; z-index: 10; background-color: rgba(255, 255, 255, 0.8);">
         
@@ -37,8 +36,19 @@
                     <a class="navtext" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     <a class="navtext" asp-area="" asp-controller="Home" asp-action="About">Om Os</a>
                     <a class="navtext" asp-area="" asp-controller="Weather" asp-action="Index">Vejret</a>
-                    <a class="navtext" asp-area="" asp-controller="Account" asp-action="Admin">Admin</a>
-                    <a class="navtext" asp-area="" asp-controller="Account" asp-action="User_Profile">Profil</a>
+                
+                    @if (User.Identity?.IsAuthenticated == true)
+    {
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Admin</a>
+        }
+        else
+        {
+            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Mine Bookinger</a>
+        }
+    }
+                 
                 </div>
 
                 <!-- Højre side: Kurv og Login -->
@@ -50,7 +60,7 @@
                 </div>
 
             </nav>
-        </header>
+ 
     </header>       
     <div>
         <div>

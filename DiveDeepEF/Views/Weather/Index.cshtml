@@ -1,0 +1,58 @@
+﻿@using DiveDeepEF.ViewModels
+@model WeatherViewModel
+
+<div>
+
+    <div style="margin-top:0.5em; border:1px solid #ccc; padding:10px; border-radius:5px;">
+        <form asp-controller="Weather" asp-action="Index" method="get">
+
+            <label for="locationInput">Indtast by / postnummer:</label>
+            <input type="text" id="locationInput" name="location" value="@Model.SelectedLocation" placeholder="Lars Tynskids Mark" />
+            <button type="submit">Opdater</button>
+        </form>
+
+        @if (!string.IsNullOrWhiteSpace(Model.SelectedLocation))
+        {
+            <p>Viser anbefalinger for <strong>@Model.SelectedLocation</strong></p>
+
+            @if (Model.RecommendationReasons?.Any() == true)
+            {
+                <ul class="recommendationReasons" style="padding:0;">
+                    @foreach (var reason in Model.RecommendationReasons)
+                    {
+                        <li style="color: crimson; list-style:none; margin-top:0.5em;">@reason</li>
+                    }
+                </ul>
+            }
+            @if (Model.WeatherData != null)
+            {
+                <div class="weatherInfo" style="margin-top:10px; padding:5px; border-top:1px dashed #ccc;">
+                    <h4>Vejrdata for @Model.SelectedLocation</h4>
+                    <p><strong>Temperatur luft:</strong> @(Model.WeatherData.AirTemperature?.ToString("F1") ?? "N/A") °C</p>
+                    <p><strong>Temperatur hav:</strong> @(Model.WeatherData.SeaSurfaceTemperature?.ToString("F1") ?? "N/A") °C</p>
+                    <p><strong>Bølge højde:</strong> @(Model.WeatherData.WaveHeight?.ToString("F1") ?? "N/A") m</p>
+                    <p><strong>Nedbør:</strong> @(Model.WeatherData.Precipitation?.ToString("F1") ?? "N/A") mm</p>
+                    <p><strong>Vindhastighed:</strong> @(Model.WeatherData.WindSpeed10m?.ToString("F1") ?? "N/A") m/s</p>
+                </div>
+            }
+            else if (ViewBag.CityName != null)
+            {
+                <p style="color:red;">Vejr data utilgængelig for @ViewBag.CityName</p>
+            }
+
+        }
+    </div>
+
+    
+        <div>
+            <p>Dragtanbefaling til denne vandtemperatur: @Model.SuitRecommendation</p>
+        </div>
+    
+
+</div>
+
+
+
+
+
+

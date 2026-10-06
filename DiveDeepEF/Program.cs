@@ -1,22 +1,22 @@
 using DiveDeepEF.Data;
 using DiveDeepEF.Interfaces;
 using DiveDeepEF.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new KeyNotFoundException("Connection string 'DefaultConnection' not found."); ;
-
 builder.Services.AddDbContext<DiveDeepEFContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepEFContext>();
 
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<DiveDeepEFContext>();
 
 
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IGeocode, GeocodeService>();
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
-            //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                //.AddRoles<IdentityRole>()
-                //.AddEntityFrameworkStores<DiveDeepEFContext>();
+                
 
 builder.Services.AddHttpClient("WeatherForecastAPI", client =>
 {

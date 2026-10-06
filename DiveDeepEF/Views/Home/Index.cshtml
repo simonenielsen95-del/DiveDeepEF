@@ -1,8 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body id="mainbaggrund">
+    <main style="min-height: 2300px;">
+        <a style="top: 300px; left: 10%" asp-area="" asp-controller="Product" asp-action="Equipment" class="bubble-box">
+            <img class="bubble" src="/image/snorkel.jpg">
+            <p class="bubble-text">Noget med noget dykning og såden noget. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv.</p>
+            <p class="bubble-textRev">Snorkel</p>
+        </a>
+        <a style="top: 800px; left: 80%" asp-area="" asp-controller="Product" asp-action="Udstyr" class="bubble-box">
+            <img class="bubble" src="/image/wreck-dive.png">
+            <p class="bubble-text">Noget med noget dykning og såden noget. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv.</p>
+            <p class="bubble-textRev">Wreck Dive</p>
+        </a>
+        <a style="top: 1500px; left: 40%;" asp-area="" asp-controller="Product" asp-action="Udstyr" class="bubble-box">
+            <img class="bubble" src="/image/cave-dive.png">
+            <p class="bubble-text">Noget med noget dykning og såden noget. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv.</p>
+            <p class="bubble-textRev">Cave Dive</p>
+        </a>
+        <a style="top: 2000px; left: 20%;" asp-area="" asp-controller="Product" asp-action="Udstyr" class="bubble-box">
+            <img class="bubble" src="/image/deep-dive.png">
+            <p class="bubble-text">Noget med noget dykning og såden noget. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv. osv.</p>
+            <p class="bubble-textRev">Deep Dive</p>
+        </a>
+    </main>
+  
+</body>
+

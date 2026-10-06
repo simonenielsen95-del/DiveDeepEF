@@ -192,6 +192,21 @@ a {
 .imgTypeDyk:hover {
     filter: drop-shadow(9px 9px 9px blue);
 }
+
+.imgTypeDykSquare {
+    width: calc(10vw + 50px);
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 10%;
+    height: auto;
+}
+
+.imgTypeDykSquare:hover {
+    filter: drop-shadow(9px 9px 9px dodgerblue);
+}
+.imgTypeDykSquare:hover .imgTypeDyk-text {
+    color: orange;
+}
 /* layout content*/
 .content {
     display: grid;

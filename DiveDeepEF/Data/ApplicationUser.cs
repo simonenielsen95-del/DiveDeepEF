@@ -1,10 +1,10 @@
 ﻿using DiveDeepEF.Models.Bookings;
 using Microsoft.AspNetCore.Identity;
 
-namespace DiveDeepEF.Data;
+namespace DiveDeepEF.Data
+{
 
-
-public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public ICollection<Booking>? Bookings { get; set; }
 
@@ -13,3 +13,4 @@ public class ApplicationUser : IdentityUser
         public ApplicationUser? User { get; set; }
     }
 }
+

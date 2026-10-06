@@ -207,14 +207,51 @@ a {
 
 
 
+/* === Dropdown-menu i navigationen === */
 
-
-/*noget der var der, kan sikkert slettes*/
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-    color: var(--bs-secondary-color);
-    text-align: end;
+#menu .dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    padding-bottom: 8px;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-    text-align: start;
+    #menu .dropdown > .navtext {
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        line-height: 1;
+        padding: 0 4px;
+    }
+
+#menu .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    z-index: 100;
+    margin-top: 4px;
+}
+
+    #menu .dropdown-content a {
+        display: block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #212529;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+        #menu .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+#menu .dropdown:hover .dropdown-content {
+    display: block;
 }

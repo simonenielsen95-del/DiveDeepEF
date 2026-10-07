@@ -46,7 +46,7 @@ namespace DiveDeepEF.Controllers
                 bookings = await _context.Bookings
                     .Include(b => b.BasketItems)
                         .ThenInclude(bi => bi.Equipment)
-                    .Where(b => b.UserId == userId && b.EndDate >= now)   // <-- NY
+                    .Where(b => b.UserId == userId && b.EndDate >= now) 
                     .ToListAsync();
             }
 
@@ -92,7 +92,7 @@ namespace DiveDeepEF.Controllers
             booking.CostumerName = user.UserName ?? "";
             booking.CostumerEmail = user.Email ?? "";
 
-            // fjerner valideringsfejl for de felter, vi selv har udfyldt
+            // fjerner valideringsfejl for de felter, derr selv har udfyldt
             ModelState.Remove(nameof(Booking.CostumerName));
             ModelState.Remove(nameof(Booking.CostumerEmail));
             ModelState.Remove(nameof(Booking.UserId));

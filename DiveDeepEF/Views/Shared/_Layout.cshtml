@@ -12,55 +12,54 @@
 
 <body>
         <header>
-            <nav id="menu" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; z-index: 10; background-color: rgba(255, 255, 255, 0.8);">
         
-                <!-- Venstre side: Logo -->
-                <div>
-                    <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img style="width:80px;" src="/image/logo.png" alt="logo">
+            <nav id="menu">
+                <!-- Venstre: logo -->
+                <div class="nav-left">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">
+                        <img style="width:120px;" src="/image/logo.png" alt="logo">
                     </a>
                 </div>
 
-                <!-- Midten: Navigationslinks -->
-                <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap; justify-content: center;">
+                <!-- Midten: links -->
+                <div class="nav-center">
                     <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
-            
+
                     <div class="dropdown">
                         <a class="navtext" asp-area="" asp-controller="Product" asp-action="Equipment">Udstyr ⮟</a>
                         <div class="dropdown-content">
-                            <a asp-area="" asp-controller="" asp-action="">Link 1</a>
-                            <a asp-area="" asp-controller="" asp-action="">Link 2</a>
-                            <a asp-area="" asp-controller="" asp-action="">Link 3</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Equipment">Link 1</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Equipment">Link 2</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Equipment">Link 3</a>
                         </div>
 
                     </div>
 
                     <a class="navtext" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     <a class="navtext" asp-area="" asp-controller="Home" asp-action="About">Om Os</a>
-                    <a class="navtext" asp-area="" asp-controller="Weather" asp-action="Index">Vejret</a>
-                
+                    <a class="navtext" asp-area="" asp-controller="Home" asp-action="Weather">Vejret</a>
+
                     @if (User.Identity?.IsAuthenticated == true)
-    {
-        @if (User.IsInRole("Admin"))
-        {
-            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Admin</a>
-        }
-        else
-        {
-            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Mine Bookinger</a>
-        }
-    }
-                 
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Admin</a>
+                        }
+                        else
+                        {
+                            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Mine Bookinger</a>
+                        }
+                        <a class="navtext" asp-area="" asp-controller="Account" asp-action="User_Profile">Profil</a>
+                    }
                 </div>
 
-                <!-- Højre side: Kurv og Login -->
-                <div style="display: flex; gap: 20px; align-items: center;">
+                <!-- Højre: login/register stablet + kurv længst til højre -->
+                <div class="nav-right">
+                    <partial name="_LoginPartial" />
                     <a asp-controller="Basket" asp-action="Index">
                         <img style="width:80px;" src="/image/kurv.png" alt="kurv">
                     </a>
-                    <partial name="_LoginPartial" />
                 </div>
-
             </nav>
  
     </header>       

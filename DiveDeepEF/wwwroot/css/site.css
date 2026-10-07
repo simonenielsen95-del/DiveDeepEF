@@ -1,6 +1,18 @@
+/* ------- Fonts ------- */
+p {
+    font-size: 20px;
+}
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+
+
 body {
     margin: 0px;
     padding: 0px;
+    color: #073160;
     font-family: "Montserrat", sans-serif;
 }
 
@@ -40,7 +52,7 @@ nav {
 }
 
 #menu {
-    padding: 20px 80px;
+    padding: 0px 80px;
     z-index: 1;
     position: sticky;
     top: 0;
@@ -138,11 +150,12 @@ footer {
 /* dropdown */
 .dropdown {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
 }
 
 .dropdown-content {
     right: 0;
+    top: 100%;
     display: none;
     position: absolute;
     font-weight: bold;
@@ -224,13 +237,13 @@ a {
 
 
 /* === Dropdown-menu i navigationen === */
+/* er det ikke allerede defineret??
 
 #menu .dropdown {
     position: relative;
     display: inline-flex;
     align-items: center;
     height: 100%;
-    padding-bottom: 8px;
 }
 
     #menu .dropdown > .navtext {
@@ -271,3 +284,4 @@ a {
 #menu .dropdown:hover .dropdown-content {
     display: block;
 }
+    */

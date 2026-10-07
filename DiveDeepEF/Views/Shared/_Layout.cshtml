@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="~/DiveDeepEF.styles.css" asp-append-version="true" />
 </head>
 
-<body>
+<body id="mainbaggrund">
         <header>
-            <nav id="menu" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; z-index: 10;">
+            <nav id="menu" style="display: flex; justify-content: space-between; align-items: center;">
         
                 <!-- Venstre side: Logo -->
                 <div>
@@ -28,9 +28,11 @@
                     <div class="dropdown">
                         <a class="navtext" asp-area="" asp-controller="Product" asp-action="Equipment">Udstyr ⮟</a>
                         <div class="dropdown-content">
-                            <a asp-area="" asp-controller="" asp-action="">Link 1</a>
-                            <a asp-area="" asp-controller="" asp-action="">Link 2</a>
-                            <a asp-area="" asp-controller="" asp-action="">Link 3</a>
+                            <a asp-area="" asp-controller="Product" asp-action="BCD">BCD'er</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Fins">Finner</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Mask">Masker</a>
+                            <a asp-area="" asp-controller="Product" asp-action=""></a>
+                            <a asp-area="" asp-controller="Product" asp-action=""></a>
                         </div>
 
                     </div>

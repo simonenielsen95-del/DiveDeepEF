@@ -9,37 +9,60 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DiveDeepEF.styles.css" asp-append-version="true" />
 </head>
-<body id="mainbaggrund">
-    <header>
-        <nav id="menu">
-            <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">
-                <img style="float: inline-start; width:80px;" src="/image/logo.png" alt="logo">
-            </a>
-            <a asp-controller="Basket" asp-action="Index">
-                <img style="float:inline-end; width:80px;" src="/image/kurv.png" alt="kurv">
-            </a>
-            <div>
-                <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
-                <div class="dropdown">
-                    <a class="navtext" asp-area="" asp-controller="Product" asp-action="Equipment">Udstyr ⮟</a>
-                    <div class="dropdown-content">
-                        <a asp-area="" asp-controller="Product" asp-action="Fins">Finner</a>
-                        <a asp-area="" asp-controller="" asp-action="">Link 2</a>
-                        <a asp-area="" asp-controller="" asp-action="">Link 3</a>
-                    </div>
+
+<body>
+        <header>
+            <nav id="menu" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; z-index: 10; background-color: rgba(255, 255, 255, 0.8);">
+        
+                <!-- Venstre side: Logo -->
+                <div>
+                    <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img style="width:80px;" src="/image/logo.png" alt="logo">
+                    </a>
                 </div>
-                <a class="navtext" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-              <partial name="_LoginPartial" />
-                <a class="navtext" asp-area="" asp-controller="Home" asp-action="About">Om Os</a>
-                <a class="navtext" asp-area="" asp-controller="Home" asp-action="Weather">Vejret</a>
 
-                <!--skal have check for bruger/admin om visibility-->
-                <a class="navtext" asp-area="" asp-controller="Account" asp-action="Admin">Admin</a>
-                <a class="navtext" asp-area="" asp-controller="Account" asp-action="Login">Login/Opret Bruger</a>
-                <a class="navtext" asp-area="" asp-controller="Account" asp-action="User_Profile">Profil</a>
-            </div>
-        </nav>
+                <!-- Midten: Navigationslinks -->
+                <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap; justify-content: center;">
+                    <a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
+            
+                    <div class="dropdown">
+                        <a class="navtext" asp-area="" asp-controller="Product" asp-action="Equipment">Udstyr ⮟</a>
+                        <div class="dropdown-content">
+                            <a asp-area="" asp-controller="" asp-action="">Link 1</a>
+                            <a asp-area="" asp-controller="" asp-action="">Link 2</a>
+                            <a asp-area="" asp-controller="" asp-action="">Link 3</a>
+                        </div>
 
+                    </div>
+
+                    <a class="navtext" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    <a class="navtext" asp-area="" asp-controller="Home" asp-action="About">Om Os</a>
+                    <a class="navtext" asp-area="" asp-controller="Weather" asp-action="Index">Vejret</a>
+                
+                    @if (User.Identity?.IsAuthenticated == true)
+    {
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Admin</a>
+        }
+        else
+        {
+            <a class="navtext" asp-area="" asp-controller="Bookings" asp-action="Index">Mine Bookinger</a>
+        }
+    }
+                 
+                </div>
+
+                <!-- Højre side: Kurv og Login -->
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <a asp-controller="Basket" asp-action="Index">
+                        <img style="width:80px;" src="/image/kurv.png" alt="kurv">
+                    </a>
+                    <partial name="_LoginPartial" />
+                </div>
+
+            </nav>
+ 
     </header>       
     <div>
         <div>

@@ -13,7 +13,7 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Booking> Bookings { get; set; } = null!;
     public DbSet<BasketItem> BasketItems { get; set; } = null!;
-    public DbSet<Equipment> Equipment { get; set; } = null!;
+    public DbSet<Equipment> Equipments { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

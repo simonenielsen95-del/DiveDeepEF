@@ -1,5 +1,6 @@
 using DiveDeepEF.Data;
 using DiveDeepEF.Interfaces;
+using DiveDeepEF.Persistence;
 using DiveDeepEF.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DiveDeepEFContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepEFContext>();
 
-
+builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IGeocode, GeocodeService>();

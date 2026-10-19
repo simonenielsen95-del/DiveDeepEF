@@ -1,5 +1,6 @@
 using DiveDeepEF.Data;
 using DiveDeepEF.Interfaces;
+using DiveDeepEF.Persistence;
 using DiveDeepEF.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IGeocode, GeocodeService>();
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
-                
+builder.Services.AddScoped<DivingPackageRepository>();
+
 
 builder.Services.AddHttpClient("WeatherForecastAPI", client =>
 {

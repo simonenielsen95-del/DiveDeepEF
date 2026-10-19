@@ -1,6 +1,8 @@
 ﻿using DiveDeepEF.Data;
 using DiveDeepEF.Models.Equipments;
+using DiveDeepEF.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiveDeepEF.Controllers;
 
@@ -22,5 +24,20 @@ public class ProductController : Controller
     public IActionResult Regulator() => View(repo.Equipment.Where(e => e is RegulatorSet));
     public IActionResult Suit() => View(repo.Equipment.Where(e => e is Suit));
     public IActionResult Tank() => View(repo.Equipment.Where(e => e is Tank));
+
+    public IActionResult DivingPackage()
+    {
+        var packets = repo.DivingPackages
+            .Include(p => p.Bcd)
+            .Include(p => p.Suit)
+            .Include(p => p.Regulator)
+            .Include(p => p.Tank)
+            .Include(p => p.Fins)
+            .Include(p => p.Mask)
+            .ToList();
+
+        return View(packets);
+    }
+}
 
 }

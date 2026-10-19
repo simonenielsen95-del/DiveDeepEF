@@ -2,28 +2,36 @@
 using DiveDeepEF.Models.Equipments;
 using DiveDeepEF.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using DiveDeepEF.Persistence;
+using DiveDeepEF.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiveDeepEF.Controllers;
 
 public class ProductController : Controller
 {
-    private readonly DiveDeepEFContext repo;
+    //private readonly DiveDeepEFContext repo;
+    private readonly IEquipmentRepository equipmentRepository;   
+   
 
-    public ProductController(DiveDeepEFContext diveDeepEFContext)
+    public ProductController(IEquipmentRepository repository)
     {
 
-        repo = diveDeepEFContext;
+        equipmentRepository = repository;
+
+
 
     }
 
-    public IActionResult Equipment() => View(repo.Equipment);
-    public IActionResult Fins() => View(repo.Equipment.Where(e => e is Fins));
-    public IActionResult BCD() => View(repo.Equipment.Where(e => e is BCD));
-    public IActionResult Mask() => View(repo.Equipment.Where(e => e is Mask));
-    public IActionResult Regulator() => View(repo.Equipment.Where(e => e is RegulatorSet));
-    public IActionResult Suit() => View(repo.Equipment.Where(e => e is Suit));
-    public IActionResult Tank() => View(repo.Equipment.Where(e => e is Tank));
+    public IActionResult Equipment() => View(equipmentRepository.GetAll());
+    public IActionResult Fins() => View(equipmentRepository.GetAllByType<Fins>());
+    //public IActionResult Fins() => View(repo.Equipment.Where(e => e is Fins));
+    public IActionResult BCD() => View(equipmentRepository.GetAllByType<BCD>());
+
+    public IActionResult Mask() => View(equipmentRepository.GetAllByType<Mask>());
+    public IActionResult Regulator() => View(equipmentRepository.GetAllByType<RegulatorSet>());
+    public IActionResult Suit() => View(equipmentRepository.GetAllByType<Suit>());
+    public IActionResult Tank() => View(equipmentRepository.GetAllByType<Tank>());
 
     public IActionResult DivingPackage()
     {

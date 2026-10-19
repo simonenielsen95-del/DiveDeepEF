@@ -13,6 +13,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DiveDeepEFContext>();
 
+builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IGeocode, GeocodeService>();

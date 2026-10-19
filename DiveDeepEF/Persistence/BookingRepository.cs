@@ -1,42 +1,92 @@
-﻿using DiveDeepEF.Models.Bookings;
+﻿using DiveDeepEF.Data;
+using DiveDeepEF.Interfaces;
+using DiveDeepEF.Models.Bookings;
 using DiveDeepEF.Models.Equipments;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiveDeepEF.Persistence
 {
-    public class BookingRepository
+    public class BookingRepository : IBookingRepository
     {
-        private static List<Booking> bookings = new List<Booking>();
+        private readonly DiveDeepEFContext _context;
 
-        public static List<Booking> GetAll()
+        public BookingRepository(DiveDeepEFContext context)
         {
-            return bookings;
+            _context = context;
         }
 
-        public static Booking? GetById(int id) => bookings.FirstOrDefault(x => x.Id == id);
+        public  List<Booking> GetAll()
+        {
+            return _context.Bookings
+            .Include(b => b.BasketItems)
+            .ThenInclude(bi => bi.Equipment)
+            .ToList();
+        }
 
-        public static void Add(Booking booking)
+        public Booking? GetById(int id)
+        {
+            return _context.Bookings
+            .Include(b => b.BasketItems)
+            .ThenInclude(bi => bi.Equipment)
+            .FirstOrDefault(b => b.Id == id);
+        }
+
+        public void Add(Booking booking)
         {
             if (booking == null) return;
-            booking.Id = bookings.Any() ? bookings.Max(x => x.Id) + 1 : 1;
-            bookings.Add(booking);
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
         }
 
-        public static void Delete(int id)
+        public void Delete(int id)
         {
-            bookings.RemoveAll(x => x.Id == id);
+            Booking? booking = GetById(id);
+
+            if (booking != null)
+            {
+                _context.Bookings.Remove(booking);
+                _context.SaveChanges();
+            }
         }
 
-        public static void Update(int id, Booking booking)
+        public void Update(Booking booking)
         {
-            var target = GetById(id);
-            if (target != null && booking != null)
+            Booking? target = GetById(booking.Id);
+
+            if (target != null)
             {
                 target.CostumerName = booking.CostumerName;
                 target.CostumerEmail = booking.CostumerEmail;
                 target.StartDate = booking.StartDate;
                 target.EndDate = booking.EndDate;
-                target.BasketItems = booking.BasketItems;
+
+                _context.SaveChanges();
             }
         }
+
+        public void AddBasketItem(int bookingId, int equipmentId)
+        {
+            var basketItem = new BasketItem
+            {
+                BookingId = bookingId,
+                EquipmentId = equipmentId,
+            };
+
+            _context.BasketItems.Add(basketItem);
+            _context.SaveChanges();
+        }
+
+        public void RemoveBasketItem(int basketItemId)
+        {
+            BasketItem? basketItem =
+                _context.BasketItems.Find(basketItemId);
+
+            if (basketItem != null)
+            {
+                _context.BasketItems.Remove(basketItem);
+                _context.SaveChanges();
+            }
+        }
+
     }
 }

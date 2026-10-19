@@ -31,15 +31,6 @@ namespace Dive_Deep.Models.Equipment
 
         public decimal PricePerDay { get; set; }
 
-        [Required(ErrorMessage = "Størrelse på maske skal vælges")]
-        public string? MaskSize { get; set; }
-
-        [Required(ErrorMessage = "Størrelse på finner skal vælges")]
-        public string? FinsSize { get; set; }
-
-        public string? SuitGender { get; set; }
-
-        [Range(1, 365, ErrorMessage = "Antal dage skal være mindst 1")]
-        public int Days { get; set; } = 1;
+      
     }
 }

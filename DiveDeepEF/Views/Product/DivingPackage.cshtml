@@ -8,15 +8,28 @@
     <h1 class="imgTypeDyk-text" style="font-size: 3rem; margin-bottom: 30px; color: darkblue;">Dykkerpakker</h1>
 </div>
 
-<!-- Her er flexboxen, der sætter dem ved siden af hinanden -->
-<div style="display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 30px; padding: 20px 20px 20px 100px;">
+<!-- Flexbox der sætter kortene ved siden af hinanden -->
+<div style="display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 30px; padding: 20px 0 20px 150px;">
     
     @foreach (var packet in Model)
     {
-        <!-- Hvert kort får en fast bredde (22rem) -->
+        
+        string imgSrc = "/image/Standard_Dive.png"; 
+
+        if (packet.PricePerDay <= 400)
+        {
+            imgSrc = "/image/snorkel2.png"; 
+        }
+        else if (packet.PricePerDay >= 700)
+        {
+            imgSrc = "/image/Luxury_Dive.png"; 
+        }
+        // -----------------------------------------------------------
+
         <div class="card" style="width: 22rem; background-color: rgba(255, 255, 255, 0.9); border-radius: 15px; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
             
-            <img src="/image/Standard_Dive.png" class="card-img-top" alt="@packet.Name" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            
+            <img src="@imgSrc" class="card-img-top" alt="@packet.Name" style="border-top-left-radius: 15px; border-top-right-radius: 15px; height: 250px; object-fit: cover;">
             
             <div class="card-body">
                 <h5 class="card-title" style="color: darkblue; font-weight: bold;">@packet.Name</h5>

@@ -103,12 +103,26 @@ namespace DiveDeepEF.Migrations
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EquipmentId")
+                    b.Property<int>("Days")
                         .HasColumnType("int");
+
+                    b.Property<int?>("DivingPackageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EquipmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SelectedSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SuitGender")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookingId");
+
+                    b.HasIndex("DivingPackageId");
 
                     b.HasIndex("EquipmentId");
 
@@ -179,6 +193,105 @@ namespace DiveDeepEF.Migrations
                     b.HasDiscriminator<string>("EquipmentType").HasValue("Equipment");
 
                     b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Dive_Deep.Models.Equipment.DivingPackage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BcdId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("FinsId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaskId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PricePerDay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("RegulatorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SuitId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TankId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BcdId");
+
+                    b.HasIndex("FinsId");
+
+                    b.HasIndex("MaskId");
+
+                    b.HasIndex("RegulatorId");
+
+                    b.HasIndex("SuitId");
+
+                    b.HasIndex("TankId");
+
+                    b.ToTable("DivingPackages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BcdId = 1,
+                            Description = "BCD + Suit + RegulatorSet + Tank + Fins + Mask",
+                            FinsId = 5,
+                            MaskId = 12,
+                            Name = "Complete StarterPack Diving Set",
+                            PricePerDay = 500m,
+                            RegulatorId = 18,
+                            SuitId = 21,
+                            TankId = 29
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BcdId = 2,
+                            Description = "BCD + Suit + RegulatorSet + Tank + Fins + Mask",
+                            FinsId = 6,
+                            MaskId = 13,
+                            Name = "Complete Advanced Diving Set",
+                            PricePerDay = 750m,
+                            RegulatorId = 19,
+                            SuitId = 22,
+                            TankId = 30
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Mask + Fins",
+                            FinsId = 7,
+                            MaskId = 14,
+                            Name = "Complete Amateur Snorkel Set",
+                            PricePerDay = 300m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Mask + Fins",
+                            FinsId = 8,
+                            MaskId = 15,
+                            Name = "Complete Professional Snorkel Set",
+                            PricePerDay = 400m
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -737,13 +850,19 @@ namespace DiveDeepEF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Dive_Deep.Models.Equipment.DivingPackage", "DivingPackage")
+                        .WithMany()
+                        .HasForeignKey("DivingPackageId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("DiveDeepEF.Models.Equipments.Equipment", "Equipment")
                         .WithMany()
                         .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Booking");
+
+                    b.Navigation("DivingPackage");
 
                     b.Navigation("Equipment");
                 });
@@ -756,6 +875,51 @@ namespace DiveDeepEF.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Dive_Deep.Models.Equipment.DivingPackage", b =>
+                {
+                    b.HasOne("DiveDeepEF.Models.Equipments.BCD", "Bcd")
+                        .WithMany()
+                        .HasForeignKey("BcdId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DiveDeepEF.Models.Equipments.Fins", "Fins")
+                        .WithMany()
+                        .HasForeignKey("FinsId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DiveDeepEF.Models.Equipments.Mask", "Mask")
+                        .WithMany()
+                        .HasForeignKey("MaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DiveDeepEF.Models.Equipments.RegulatorSet", "Regulator")
+                        .WithMany()
+                        .HasForeignKey("RegulatorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DiveDeepEF.Models.Equipments.Suit", "Suit")
+                        .WithMany()
+                        .HasForeignKey("SuitId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DiveDeepEF.Models.Equipments.Tank", "Tank")
+                        .WithMany()
+                        .HasForeignKey("TankId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Bcd");
+
+                    b.Navigation("Fins");
+
+                    b.Navigation("Mask");
+
+                    b.Navigation("Regulator");
+
+                    b.Navigation("Suit");
+
+                    b.Navigation("Tank");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

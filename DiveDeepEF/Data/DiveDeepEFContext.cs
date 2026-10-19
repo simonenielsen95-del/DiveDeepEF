@@ -3,6 +3,7 @@ using DiveDeepEF.Models.Equipments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Dive_Deep.Models.Equipment;
+
 namespace DiveDeepEF.Data;
 
 public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
@@ -32,12 +33,19 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(b => b.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Booking 1 ─── mange BasketItems
+        // Equipment 1 ─── mange BasketItems
         modelBuilder.Entity<BasketItem>()
-            .HasOne(bi => bi.Booking)
-            .WithMany(b => b.BasketItems)
-            .HasForeignKey(bi => bi.BookingId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasOne(bi => bi.Equipment)
+            .WithMany()
+            .HasForeignKey(bi => bi.EquipmentId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // DivingPackage 1 ─── mange BasketItems 
+        modelBuilder.Entity<BasketItem>()
+            .HasOne(bi => bi.DivingPackage)
+            .WithMany()
+            .HasForeignKey(bi => bi.DivingPackageId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Equipment 1 ─── mange BasketItems
         modelBuilder.Entity<BasketItem>()
@@ -114,6 +122,76 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
 
             );
 
+ 
+        modelBuilder.Entity<DivingPackage>(entity =>
+        {
+            entity.HasOne(p => p.Bcd).WithMany().HasForeignKey(p => p.BcdId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(p => p.Suit).WithMany().HasForeignKey(p => p.SuitId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(p => p.Regulator).WithMany().HasForeignKey(p => p.RegulatorId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(p => p.Tank).WithMany().HasForeignKey(p => p.TankId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(p => p.Fins).WithMany().HasForeignKey(p => p.FinsId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(p => p.Mask).WithMany().HasForeignKey(p => p.MaskId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<DivingPackage>().HasData
+ (
+   
+     new DivingPackage
+     {
+         Id = 1,
+         Name = "Complete StarterPack Diving Set",
+         Description = "BCD + Suit + RegulatorSet + Tank + Fins + Mask",
+         PricePerDay = 500,
+         BcdId = 1,        
+         FinsId = 5,     
+         MaskId = 12,    
+         RegulatorId = 18, 
+         SuitId = 21,       
+         TankId = 29      
+     },
+
+  
+     new DivingPackage
+     {
+         Id = 2,
+         Name = "Complete Advanced Diving Set",
+         Description = "BCD + Suit + RegulatorSet + Tank + Fins + Mask",
+         PricePerDay = 750,
+         BcdId = 2,      
+         FinsId = 6,       
+         MaskId = 13,      
+         RegulatorId = 19, 
+         SuitId = 22,       
+         TankId = 30      
+     },
+
+
+     new DivingPackage
+     {
+         Id = 3,
+         Name = "Complete Amateur Snorkel Set",
+         Description = "Mask + Fins",
+         PricePerDay = 300,
+         FinsId = 7,        
+         MaskId = 14       
+                         
+     },
+
+
+     new DivingPackage
+     {
+         Id = 4,
+         Name = "Complete Professional Snorkel Set",
+         Description = "Mask + Fins",
+         PricePerDay = 400,
+         FinsId = 8,        
+         MaskId = 15       
+     }
+ );
+
+        // Fortælleer EF Core at priser er decimaler med 2 cifre efter kommaet
+        modelBuilder.Entity<DivingPackage>().Property(p => p.PricePerDay).HasPrecision(18, 2);
+        modelBuilder.Entity<Equipment>().Property(e => e.PricePerDay).HasPrecision(18, 2);
 
     }
 

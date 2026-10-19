@@ -1,0 +1,74 @@
+﻿@model List<Dive_Deep.Models.Equipment.DivingPackage>
+
+@{
+    ViewData["Title"] = "Dykkerpakker";
+}
+
+<div style="text-align:center; margin-top: 20px;">
+    <h1 class="imgTypeDyk-text" style="font-size: 3rem; margin-bottom: 30px; color: darkblue;">Dykkerpakker</h1>
+</div>
+
+<!-- Flexbox der sætter kortene ved siden af hinanden -->
+<div style="display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 30px; padding: 20px 0 20px 150px;">
+    
+    @foreach (var packet in Model)
+    {
+        
+        string imgSrc = "/image/Standard_Dive.png"; 
+
+        if (packet.PricePerDay <= 400)
+        {
+            imgSrc = "/image/snorkel2.png"; 
+        }
+        else if (packet.PricePerDay >= 700)
+        {
+            imgSrc = "/image/Luxury_Dive.png"; 
+        }
+        // -----------------------------------------------------------
+
+        <div class="card" style="width: 22rem; background-color: rgba(255, 255, 255, 0.9); border-radius: 15px; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            
+            
+            <img src="@imgSrc" class="card-img-top" alt="@packet.Name" style="border-top-left-radius: 15px; border-top-right-radius: 15px; height: 250px; object-fit: cover;">
+            
+            <div class="card-body">
+                <h5 class="card-title" style="color: darkblue; font-weight: bold;">@packet.Name</h5>
+                <p class="card-text" style="font-size: 0.9rem;">@packet.Description</p>
+                
+                <div class="mb-3">
+                    <small class="text-muted d-block fw-bold mb-1">Inkluderet udstyr:</small>
+                    <ul class="list-unstyled small" style="color: #444; text-align: left;">
+                        @if (packet.Bcd != null)
+                        {
+                            <li>✓ BCD (@packet.Bcd.Brand)</li>
+                        }
+                        @if (packet.Suit != null)
+                        {
+                            <li>✓ Dragt (@packet.Suit.Brand)</li>
+                        }
+                        @if (packet.Regulator != null)
+                        {
+                            <li>✓ Regulator (@packet.Regulator.Brand)</li>
+                        }
+                        @if (packet.Tank != null)
+                        {
+                            <li>✓ Tank (@packet.Tank.Volume L)</li>
+                        }
+                        @if (packet.Fins != null)
+                        {
+                            <li>✓ Finner (@packet.Fins.Brand)</li>
+                        }
+                        @if (packet.Mask != null)
+                        {
+                            <li>✓ Maske (@packet.Mask.Brand)</li>
+                        }
+                    </ul>
+                </div>
+                
+                <h4 style="color: #0056b3; font-weight: bold; margin-top: 15px;">@packet.PricePerDay DKK / dag</h4>
+                
+                <a asp-controller="Booking" asp-action="Index" asp-route-id="@packet.Id" class="btn btn-primary w-100" style="background-color: darkblue; border-radius: 20px; margin-top: 10px;">Læs mere</a>
+            </div>
+        </div>
+    }
+</div>

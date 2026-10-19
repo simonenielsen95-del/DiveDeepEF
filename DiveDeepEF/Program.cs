@@ -18,7 +18,8 @@ builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IGeocode, GeocodeService>();
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
-                
+builder.Services.AddScoped<DivingPackageRepository>();
+
 
 builder.Services.AddHttpClient("WeatherForecastAPI", client =>
 {

@@ -17,7 +17,7 @@ public class ProductController : Controller
     public ProductController(IEquipmentRepository repository, DivingPackageRepository divingPackageRepository)
     {
         equipmentRepository = repository;
-        divingPackageRepository = divingPackageRepository;
+        this.divingPackageRepository = divingPackageRepository;
     }
 
     public IActionResult Equipment() => View(equipmentRepository.GetAll());

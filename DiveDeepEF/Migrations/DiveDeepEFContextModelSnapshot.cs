@@ -183,9 +183,9 @@ namespace DiveDeepEF.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<float>("PricePerDay")
+                    b.Property<decimal>("PricePerDay")
                         .HasPrecision(18, 2)
-                        .HasColumnType("real(18)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -452,7 +452,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 1,
                             Brand = "Scubapro",
-                            PricePerDay = 125f,
+                            PricePerDay = 125m,
                             Model = "Navigator Lite",
                             Size = "S, M, L"
                         },
@@ -460,7 +460,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 2,
                             Brand = "Scubapro",
-                            PricePerDay = 140f,
+                            PricePerDay = 140m,
                             Model = "Glide",
                             Size = "S, M, L"
                         },
@@ -468,7 +468,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 3,
                             Brand = "Scubapro",
-                            PricePerDay = 200f,
+                            PricePerDay = 200m,
                             Model = "Hydros Pro",
                             Size = "S, M, L"
                         },
@@ -476,7 +476,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 4,
                             Brand = "Seac",
-                            PricePerDay = 145f,
+                            PricePerDay = 145m,
                             Model = "Modular",
                             Size = "S, M, L"
                         });
@@ -510,7 +510,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 5,
                             Brand = "Scubapro",
-                            PricePerDay = 50f,
+                            PricePerDay = 50m,
                             Model = "Jet Fin",
                             Size = "XS, S, M, L, XL"
                         },
@@ -518,7 +518,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 6,
                             Brand = "Scubapro",
-                            PricePerDay = 50f,
+                            PricePerDay = 50m,
                             Model = "GO Travel",
                             Size = "XS, S, M, L, XL"
                         },
@@ -526,7 +526,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 7,
                             Brand = "Scubapro",
-                            PricePerDay = 60f,
+                            PricePerDay = 60m,
                             Model = "Seawing Supernova",
                             Size = "XS, S, M, L, XL"
                         },
@@ -534,7 +534,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 8,
                             Brand = "Seac",
-                            PricePerDay = 50f,
+                            PricePerDay = 50m,
                             Model = "Propulsion",
                             Size = "XS, S, M, L, XL"
                         },
@@ -542,7 +542,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 9,
                             Brand = "Seac",
-                            PricePerDay = 50f,
+                            PricePerDay = 50m,
                             Model = "ALA",
                             Size = "XS, S, M, L, XL"
                         },
@@ -550,7 +550,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 10,
                             Brand = "Fourth Element",
-                            PricePerDay = 75f,
+                            PricePerDay = 75m,
                             Model = "Tech",
                             Size = "XS, S, M, L, XL"
                         },
@@ -558,7 +558,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 11,
                             Brand = "Fourth Element",
-                            PricePerDay = 80f,
+                            PricePerDay = 80m,
                             Model = "Rec Fin",
                             Size = "XS, S, M, L, XL"
                         });
@@ -585,42 +585,42 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 12,
                             Brand = "Scubapro",
-                            PricePerDay = 50f,
+                            PricePerDay = 50m,
                             Model = "Ghost"
                         },
                         new
                         {
                             Id = 13,
                             Brand = "Scubapro",
-                            PricePerDay = 60f,
+                            PricePerDay = 60m,
                             Model = "D-Mask"
                         },
                         new
                         {
                             Id = 14,
                             Brand = "Scubapro",
-                            PricePerDay = 50f,
+                            PricePerDay = 50m,
                             Model = "Spectra Mini"
                         },
                         new
                         {
                             Id = 15,
                             Brand = "Scubapro",
-                            PricePerDay = 75f,
+                            PricePerDay = 75m,
                             Model = "Crystal VU"
                         },
                         new
                         {
                             Id = 16,
                             Brand = "Fourth Element",
-                            PricePerDay = 75f,
+                            PricePerDay = 75m,
                             Model = "Scout Enhance"
                         },
                         new
                         {
                             Id = 17,
                             Brand = "Tusa",
-                            PricePerDay = 75f,
+                            PricePerDay = 75m,
                             Model = "Element"
                         });
                 });
@@ -648,7 +648,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 18,
                             Brand = "Scubapro",
-                            PricePerDay = 125f,
+                            PricePerDay = 125m,
                             FirstStage = "MK25 EVO",
                             Octopus = "R105",
                             SecondStage = "S600"
@@ -657,7 +657,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 19,
                             Brand = "Scubapro",
-                            PricePerDay = 100f,
+                            PricePerDay = 100m,
                             FirstStage = "MK17 EVO",
                             Octopus = "R095",
                             SecondStage = "C370"
@@ -666,7 +666,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 20,
                             Brand = "Scubapro",
-                            PricePerDay = 150f,
+                            PricePerDay = 150m,
                             FirstStage = "MK25 EVO BT",
                             Octopus = "S270",
                             SecondStage = "A700 Carbon BT"
@@ -712,7 +712,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 21,
                             Brand = "Scubapro",
-                            PricePerDay = 100f,
+                            PricePerDay = 100m,
                             Gender = "Men/Women",
                             Model = "Definition",
                             Size = "XS, S, M, L, XL",
@@ -723,7 +723,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 22,
                             Brand = "Scubapro",
-                            PricePerDay = 100f,
+                            PricePerDay = 100m,
                             Gender = "Men/Women",
                             Model = "Definition",
                             Size = "XS, S, M, L, XL",
@@ -734,7 +734,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 23,
                             Brand = "Scubapro",
-                            PricePerDay = 100f,
+                            PricePerDay = 100m,
                             Gender = "Men/Women",
                             Model = "Definition",
                             Size = "XS, S, M, L, XL",
@@ -745,7 +745,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 24,
                             Brand = "Waterproof",
-                            PricePerDay = 100f,
+                            PricePerDay = 100m,
                             Gender = "Men/Women",
                             Model = "W5",
                             Size = "XS, S, M, L, XL",
@@ -756,7 +756,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 25,
                             Brand = "Fourth Element",
-                            PricePerDay = 120f,
+                            PricePerDay = 120m,
                             Gender = "Men/Women",
                             Model = "Proteus",
                             Size = "XS, S, M, L, XL",
@@ -767,7 +767,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 26,
                             Brand = "Scubapro",
-                            PricePerDay = 300f,
+                            PricePerDay = 300m,
                             Gender = "Men/Women",
                             Model = "Exodry 4.0",
                             Size = "XS, S, M, L, XL",
@@ -777,7 +777,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 27,
                             Brand = "Waterproof",
-                            PricePerDay = 320f,
+                            PricePerDay = 320m,
                             Gender = "Men/Women",
                             Model = "D7 Evo",
                             Size = "XS, S, M, L, XL",
@@ -787,7 +787,7 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 28,
                             Brand = "Santi",
-                            PricePerDay = 350f,
+                            PricePerDay = 350m,
                             Gender = "Men/Women",
                             Model = "E.Lite Plus",
                             Size = "XS, S, M, L, XL",
@@ -809,28 +809,28 @@ namespace DiveDeepEF.Migrations
                         {
                             Id = 29,
                             Brand = "Scubapro",
-                            PricePerDay = 150f,
+                            PricePerDay = 150m,
                             Volume = 5
                         },
                         new
                         {
                             Id = 30,
                             Brand = "Scubapro",
-                            PricePerDay = 160f,
+                            PricePerDay = 160m,
                             Volume = 10
                         },
                         new
                         {
                             Id = 31,
                             Brand = "Scubapro",
-                            PricePerDay = 170f,
+                            PricePerDay = 170m,
                             Volume = 12
                         },
                         new
                         {
                             Id = 32,
                             Brand = "Scubapro",
-                            PricePerDay = 180f,
+                            PricePerDay = 180m,
                             Volume = 15
                         });
                 });

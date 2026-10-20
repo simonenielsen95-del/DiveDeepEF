@@ -17,7 +17,7 @@ namespace DiveDeepEF.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -184,7 +184,8 @@ namespace DiveDeepEF.Migrations
                         .HasColumnType("nvarchar(13)");
 
                     b.Property<float>("PricePerDay")
-                        .HasColumnType("real");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("real(18)");
 
                     b.HasKey("Id");
 
@@ -220,6 +221,7 @@ namespace DiveDeepEF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PricePerDay")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("RegulatorId")

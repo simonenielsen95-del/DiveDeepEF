@@ -1,0 +1,188 @@
+﻿@model List<DiveDeepEF.Models.Equipments.Equipment>
+@using DiveDeepEF.Models.Equipments
+
+@{
+    var product = Model.FirstOrDefault();
+
+    if (product == null)
+    {
+        return;
+    }
+
+    string type = ViewBag.Type?.ToString() ?? product.GetType().Name;
+
+    bool HasProperty(string propertyName) =>
+        product.GetType().GetProperty(propertyName) != null;
+
+    object? GetPropertyValue(string propertyName) =>
+        product.GetType().GetProperty(propertyName)?.GetValue(product);
+}
+
+<title>Produktdetaljer</title>
+
+<main style="text-align: center;">
+    <form asp-controller="Basket" asp-action="Add" method="post">
+
+        <input type="hidden"
+               id="equipmentId"
+               name="EquipmentId"
+               value="@product.Id" />
+
+        <input type="hidden"
+               name="EquipmentType"
+               value="@type" />
+
+        <input type="hidden"
+               id="pricePerDay"
+               value="@product.PricePerDay.ToString(
+                                  System.Globalization.CultureInfo.InvariantCulture)" />
+
+        <div style="display: inline-flex;
+                    text-align: left;
+                    gap: 50px;
+                    flex-wrap: wrap;
+                    justify-content: center;">
+
+            <!-- Produkt -->
+            <div>
+                <img style="width: 200px;"
+                     src="/Image/deep-dive.png"
+                     alt="Dykkerudstyr" />
+
+                @if (HasProperty("Model") &&
+                                GetPropertyValue("Model") != null)
+                {
+                    <h2>@GetPropertyValue("Model")</h2>
+                }
+
+                <h5>@product.Brand</h5>
+
+                @if (HasProperty("Size") &&
+                                GetPropertyValue("Size") != null)
+                {
+                    <p>Størrelse: @GetPropertyValue("Size")</p>
+                }
+
+                @if (HasProperty("Capacity") &&
+                                GetPropertyValue("Capacity") != null)
+                {
+                    <p>Kapacitet: @GetPropertyValue("Capacity")</p>
+                }
+
+                <h4>@product.PricePerDay DKK pr. dag</h4>
+            </div>
+
+            <!-- Booking -->
+            <div>
+                <div>
+                    <label for="amount">
+                        <strong>Mængde</strong>
+                    </label>
+
+                    <input type="number"
+                           id="amount"
+                           name="Amount"
+                           value="1"
+                           min="1"
+                           required
+                           onchange="calculateTotal()"
+                           oninput="calculateTotal()" />
+                </div>
+
+                <br />
+
+                <div>
+                    <label for="startDate">
+                        <strong>Fra</strong>
+                    </label>
+
+                    <input type="date"
+                           id="startDate"
+                           name="StartDate"
+                           min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                           required
+                           onchange="calculateTotal()" />
+                </div>
+
+                <br />
+
+                <div>
+                    <label for="endDate">
+                        <strong>Til</strong>
+                    </label>
+
+                    <input type="date"
+                           id="endDate"
+                           name="EndDate"
+                           min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")"
+                           required
+                           onchange="calculateTotal()" />
+                </div>
+
+                <br />
+
+                <div>
+                    <p>
+                        Antal dage: <span id="numberOfDays">0</span>
+                    </p>
+
+                    <h3>
+                        Total: <span id="total">0.00</span> kr
+                    </h3>
+                </div>
+
+                <a asp-controller="Product"
+                   asp-action="@ViewBag.Type"
+                   class="btn btn-secondary">
+                    Tilbage
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Tilføj til kurv
+                </button>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script>
+    function calculateTotal() {
+        const amountInput = document.getElementById("amount");
+        const amount = Number(amountInput.value);
+
+        const price = Number(
+            document.getElementById("pricePerDay").value
+        );
+
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        const daysElement = document.getElementById("numberOfDays");
+        const totalElement = document.getElementById("total");
+
+        if (!startDate || !endDate || amount < 1 || !amountInput.value) {
+            daysElement.innerText = "0";
+            totalElement.innerText = "0.00";
+            return;
+        }
+
+        const start = new Date(startDate + "T00:00:00");
+        const end = new Date(endDate + "T00:00:00");
+
+        const days = Math.round(
+            (end - start) / 86400000
+        );
+
+        if (days <= 0) {
+            daysElement.innerText = "0";
+            totalElement.innerText = "0.00";
+            return;
+        }
+
+        const total = amount * price * days;
+
+        daysElement.innerText = days;
+        totalElement.innerText = total.toFixed(2);
+    }
+</script>
+```

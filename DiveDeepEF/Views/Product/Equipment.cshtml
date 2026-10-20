@@ -7,8 +7,12 @@
         <br>
         <br>
         <div>
-            <h1>Alt dykker udstyr</h1>
-            <div style="display: inline-flex;">
+            <h1>Dykker Pakker</h1>
+            <a asp-area="" asp-controller="Product" asp-action="DivingPackage">
+                <img class="imgTypeDykSquare" src="/Image/Standard_Dive.png" alt="Dykker Pakker">               
+            </a>
+            <h1>Alt dykker udstyr</h1>          
+            <div style="display: inline-flex;">               
                 <a asp-area="" asp-controller="Product" asp-action="BCD">
                     <img class="imgTypeDykSquare" src="/image/Bcd.png" alt="BCD">
                     <h1 class="imgTypeDyk-text">BCD'er</h1>
@@ -18,7 +22,7 @@
                     <h1 class="imgTypeDyk-text">Finner</h1>
                 </a>
                 <a asp-area="" asp-controller="Product" asp-action="Mask">
-                    <img class="imgTypeDykSquare" src="/image/Diving_Mask.jpg" alt="Masker">
+                    <img class="imgTypeDykSquare" src="/Image/diving-mask.png" alt="Masker">
                     <h1 class="imgTypeDyk-text">Masker</h1>
                 </a>
             </div>

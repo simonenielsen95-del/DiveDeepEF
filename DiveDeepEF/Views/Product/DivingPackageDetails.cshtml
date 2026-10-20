@@ -1,0 +1,144 @@
+﻿@model Dive_Deep.Models.Equipment.DivingPackage
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-4">
+    <h1>@Model.Name</h1>
+
+    <p>@Model.Description</p>
+
+    <h4>Included equipment</h4>
+    <ul>
+        @if (Model.Bcd != null)
+        {
+            <li>BCD: @Model.Bcd.Brand</li>
+        }
+        @if (Model.Suit != null)
+        {
+            <li>Dragt: @Model.Suit.Brand</li>
+        }
+        @if (Model.Regulator != null)
+        {
+            <li>Regulator: @Model.Regulator.Brand</li>
+        }
+        @if (Model.Tank != null)
+        {
+            <li>Tank: @Model.Tank.Volume L</li>
+        }
+        @if (Model.Fins != null)
+        {
+            <li>Finner: @Model.Fins.Brand</li>
+        }
+        @if (Model.Mask != null)
+        {
+            <li>Maske: @Model.Mask.Brand</li>
+        }
+    </ul>
+
+    <h3>@Model.PricePerDay DKK / dag</h3>
+
+    <form asp-controller="Basket" asp-action="AddPackage" method="post">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" name="packageId" value="@Model.Id" />
+
+        <div class="mb-3">
+            <label for="amount" class="form-label">Mængde</label>
+            <input type="number"
+                   id="amount"
+                   name="amount"
+                   value="1"
+                   min="1"
+                   max="20"
+                   required
+                   class="form-control"
+                   style="max-width: 150px;"
+                   oninput="calculateTotal()" />
+        </div>
+
+        <div class="mb-3">
+            <label for="startDate" class="form-label">Fra</label>
+            <input type="date"
+                   id="startDate"
+                   name="startDate"
+                   min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                   required
+                   class="form-control"
+                   style="max-width: 220px;"
+                   onchange="updateEndDate(); calculateTotal()" />
+        </div>
+
+        <div class="mb-3">
+            <label for="endDate" class="form-label">Til</label>
+            <input type="date"
+                   id="endDate"
+                   name="endDate"
+                   min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                   required
+                   class="form-control"
+                   style="max-width: 220px;"
+                   onchange="calculateTotal()" />
+        </div>
+
+        <p>Antal dage: <span id="numberOfDays">0</span></p>
+        <h3>Total: <span id="total">0.00</span> kr.</h3>
+
+        <a asp-controller="Product"
+           asp-action="DivingPackage"
+           class="btn btn-secondary">
+            Tilbage
+        </a>
+
+        <button type="submit" class="btn btn-primary">
+            Tilføj til kurv
+        </button>
+    </form>
+</div>
+
+<script>
+    const pricePerDay = @Model.PricePerDay.ToString(
+                System.Globalization.CultureInfo.InvariantCulture);
+
+    function updateEndDate() {
+        const startInput = document.getElementById("startDate");
+        const endInput = document.getElementById("endDate");
+
+        if (startInput.value) {
+            endInput.min = startInput.value;
+
+            if (endInput.value && endInput.value < startInput.value) {
+                endInput.value = "";
+            }
+        }
+
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        const amount = Number(document.getElementById("amount").value);
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        let days = 0;
+
+        if (startDate && endDate) {
+            const start = new Date(startDate + "T00:00:00");
+            const end = new Date(endDate + "T00:00:00");
+
+            // Both the start and end dates count as rental days.
+            days = Math.round((end - start) / 86400000) + 1;
+        }
+
+        if (amount < 1 || !startDate || !endDate || days < 1) {
+            document.getElementById("numberOfDays").innerText = "0";
+            document.getElementById("total").innerText = "0.00";
+            return;
+        }
+
+        document.getElementById("numberOfDays").innerText = days;
+        document.getElementById("total").innerText =
+            (amount * pricePerDay * days).toFixed(2);
+    }
+</script>

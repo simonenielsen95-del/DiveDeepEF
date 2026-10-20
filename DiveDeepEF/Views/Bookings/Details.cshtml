@@ -1,8 +1,16 @@
-﻿@model DiveDeepEF.Models.Bookings.Booking
+﻿
+@model DiveDeepEF.Models.Bookings.Booking
+@using DiveDeepEF.Models.Equipments
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var equipment = ViewBag.Equipment as List<Equipment>
+                    ?? new List<Equipment>();
+
+    string Name(Equipment e) =>
+        $"{e.Brand} {e.GetType().GetProperty("Model")?.GetValue(e)}".Trim();
 }
 
 <h1>Details</h1>
@@ -10,6 +18,7 @@
 <div>
     <h4>Booking</h4>
     <hr />
+
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CostumerName)
@@ -17,18 +26,21 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CostumerName)
         </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CostumerEmail)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CostumerEmail)
         </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EndDate)
         </dt>
@@ -37,6 +49,93 @@
         </dd>
     </dl>
 </div>
+
+<hr />
+
+<h4>Udstyr i bookingen</h4>
+
+@if (TempData["Error"] != null)
+{
+    <div class="text-danger">@TempData["Error"]</div>
+}
+
+@if (!Model.BasketItems.Any())
+{
+    <p>Ingen varer tilføjet endnu.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Type</th>
+                <th>Pris pr. dag</th>
+                <th>Mængde</th>
+                <th>Antal dage</th>
+                <th>Pris for perioden</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.BasketItems)
+            {
+                var pricePerDay = item.DivingPackage?.PricePerDay
+                ?? item.Equipment?.PricePerDay
+                ?? 0;
+                var itemTotal = pricePerDay * item.Quantity * item.Days;
+
+                <tr>
+                    <td>
+                        @if (item.DivingPackage != null)
+                        {
+                            @item.DivingPackage.Name
+                        }
+                        else if (item.Equipment != null)
+                        {
+                            @Name(item.Equipment)
+                        }
+                        else
+                        {
+                            <span>Ukendt produkt</span>
+                        }
+                    </td>
+
+                    <td>
+                        @if (item.DivingPackage != null)
+                        {
+                            <span>Dykkerpakke</span>
+                        }
+                        else if (item.Equipment != null)
+                        {
+                            @item.Equipment.GetType().Name
+                        }
+                    </td>
+                    <td>@pricePerDay.ToString("N2") kr</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Days</td>
+                    <td>@itemTotal.ToString("N2") kr</td>
+                    <td>
+                        <form asp-action="RemoveItem" method="post">
+                            <input type="hidden" name="basketItemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Fjern
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5">Total</th>
+                <th colspan="2">@Model.TotalPrice.ToString("N2") kr</th>
+            </tr>
+        </tfoot>
+    </table>
+}
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

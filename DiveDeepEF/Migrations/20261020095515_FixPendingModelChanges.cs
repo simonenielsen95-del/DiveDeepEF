@@ -10,15 +10,15 @@ namespace DiveDeepEF.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<float>(
-                name: "PricePerDay",
-                table: "Equipments",
-                type: "real(18)",
-                precision: 18,
-                scale: 2,
-                nullable: false,
-                oldClrType: typeof(float),
-                oldType: "real");
+            migrationBuilder.AlterColumn<decimal>(
+            name: "PricePerDay",
+            table: "Equipments",
+            type: "decimal(18,2)",
+            precision: 18,
+            scale: 2,
+            nullable: false,
+            oldClrType: typeof(float),
+            oldType: "real");
         }
 
         /// <inheritdoc />

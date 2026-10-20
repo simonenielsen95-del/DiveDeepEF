@@ -9,6 +9,11 @@ body {
     background-repeat: no-repeat;
     background-size: 100% auto;
 }
+#nonemainbaggrund {
+    background-image: url("/image/baggrund.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
 
 main {
     text-align: center;
@@ -275,3 +280,9 @@ a {
         .nav-right .navbar-nav .nav-item {
             line-height: 1.2;
         }
+
+    /* fonts */
+h1 {
+    color: navy;
+    font-weight: 600;
+}

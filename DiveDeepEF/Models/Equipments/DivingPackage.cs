@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DiveDeepEF.Models.Equipments;
+using Dive_Deep.Models.Equipment;
 
 namespace Dive_Deep.Models.Equipment
 {

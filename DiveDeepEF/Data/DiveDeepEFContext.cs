@@ -61,6 +61,11 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<Booking>()
             .Ignore(b => b.TotalPrice);
 
+        modelBuilder.Entity<Equipment>()
+         .Property(e => e.PricePerDay)
+         .HasPrecision(18, 2);
+
+
         // Sætter Discriminator = EquiptmentType
         modelBuilder.Entity<Equipment>()
             .HasDiscriminator<string>("EquipmentType");
@@ -122,7 +127,7 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
 
             );
 
- 
+
         modelBuilder.Entity<DivingPackage>(entity =>
         {
             entity.HasOne(p => p.Bcd).WithMany().HasForeignKey(p => p.BcdId).OnDelete(DeleteBehavior.Restrict);
@@ -135,34 +140,34 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<DivingPackage>().HasData
  (
-   
+
      new DivingPackage
      {
          Id = 1,
          Name = "Complete StarterPack Diving Set",
          Description = "BCD + Suit + RegulatorSet + Tank + Fins + Mask",
          PricePerDay = 500,
-         BcdId = 1,        
-         FinsId = 5,     
-         MaskId = 12,    
-         RegulatorId = 18, 
-         SuitId = 21,       
-         TankId = 29      
+         BcdId = 1,
+         FinsId = 5,
+         MaskId = 12,
+         RegulatorId = 18,
+         SuitId = 21,
+         TankId = 29
      },
 
-  
+
      new DivingPackage
      {
          Id = 2,
          Name = "Complete Advanced Diving Set",
          Description = "BCD + Suit + RegulatorSet + Tank + Fins + Mask",
          PricePerDay = 750,
-         BcdId = 2,      
-         FinsId = 6,       
-         MaskId = 13,      
-         RegulatorId = 19, 
-         SuitId = 22,       
-         TankId = 30      
+         BcdId = 2,
+         FinsId = 6,
+         MaskId = 13,
+         RegulatorId = 19,
+         SuitId = 22,
+         TankId = 30
      },
 
 
@@ -172,9 +177,9 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
          Name = "Complete Amateur Snorkel Set",
          Description = "Mask + Fins",
          PricePerDay = 300,
-         FinsId = 7,        
-         MaskId = 14       
-                         
+         FinsId = 7,
+         MaskId = 14
+
      },
 
 
@@ -184,15 +189,14 @@ public class DiveDeepEFContext : IdentityDbContext<ApplicationUser>
          Name = "Complete Professional Snorkel Set",
          Description = "Mask + Fins",
          PricePerDay = 400,
-         FinsId = 8,        
-         MaskId = 15       
+         FinsId = 8,
+         MaskId = 15
      }
  );
 
         // Fortælleer EF Core at priser er decimaler med 2 cifre efter kommaet
         modelBuilder.Entity<DivingPackage>().Property(p => p.PricePerDay).HasPrecision(18, 2);
-        modelBuilder.Entity<Equipment>().Property(e => e.PricePerDay).HasPrecision(18, 2);
-
+      
     }
 
 }

@@ -1,17 +1,114 @@
-﻿@using DiveDeepEF.Models.Bookings
+﻿
+@using DiveDeepEF.Models.Bookings
 @model List<Booking>
 
-<main>
+<main style="text-align: center;">
     <h1>Din kurv</h1>
+
     @if (!Model.Any())
     {
         <h3>Din kurv er tom.</h3>
-        <a asp-controller="Product" asp-action="Udstyr" class="btn btn-primary">
-            Se udstyr
+
+        <a asp-controller="Bookings"
+           asp-action="Create"
+           class="btn btn-primary">
+            Opret booking
         </a>
     }
+    else
+    {
+        @foreach (var booking in Model)
+        {
+            <div style="max-width: 900px; margin: 0 auto 40px auto; text-align: left;">
+                <h4>
+                    @booking.StartDate.ToString("dd-MM-yyyy")
+                    –
+                    @booking.EndDate.ToString("dd-MM-yyyy")
+                    (@booking.NumberOfDays dage)
+                </h4>
 
-    <button class="btn btn-primary">
-        Gå til betaling
-    </button>
+                @if (!booking.BasketItems.Any())
+                {
+                    <p>Ingen varer endnu.</p>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produkt</th>
+                                <th>Pris pr. dag</th>
+                                <th>Mængde</th>
+                                <th>Pris for perioden</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in booking.BasketItems)
+                            {
+                                var equipment = item.Equipment;
+                                var package = item.DivingPackage;
+
+                                var productName = package != null
+                                ? package.Name
+                                : equipment != null
+                                ? $"{equipment.Brand}"
+                                : "Ukendt produkt";
+
+                                var pricePerDay = package?.PricePerDay
+                                ?? equipment?.PricePerDay
+                                ?? 0;
+
+                                var itemTotal =
+                                pricePerDay * item.Quantity * item.Days;
+
+                                <tr>
+                                    <td>
+                                        @productName
+
+                                        @if (package != null)
+                                        {
+                                            <span class="badge bg-info text-dark">
+                                                Pakke
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @pricePerDay.ToString("N2") kr
+                                    </td>
+
+                                    <td>
+                                        @item.Quantity
+                                    </td>
+
+                                    <td>
+                                        @itemTotal.ToString("N2") kr
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th colspan="3">Total</th>
+                                <th>@booking.TotalPrice.ToString("N2") kr</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+
+                <a asp-controller="Bookings"
+                   asp-action="Details"
+                   asp-route-id="@booking.Id"
+                   class="btn btn-secondary">
+                    Rediger udstyr
+                </a>
+            </div>
+        }
+
+        <button type="button" class="btn btn-primary">
+            Gå til betaling
+        </button>
+    }
 </main>

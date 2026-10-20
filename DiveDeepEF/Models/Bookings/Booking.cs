@@ -35,11 +35,12 @@ namespace DiveDeepEF.Models.Bookings
             (EndDate.Date - StartDate.Date).Days + 1;
 
         [NotMapped]
-        public float TotalPrice =>
+        public decimal TotalPrice =>
             BasketItems.Sum(item =>
-                
-                item.Equipment.PricePerDay *
-                NumberOfDays);
+                ((item.Equipment?.PricePerDay ?? 0) +
+                 (item.DivingPackage?.PricePerDay ?? 0))
+                * item.Quantity
+                * item.Days);
 
     }
 }

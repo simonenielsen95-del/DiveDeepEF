@@ -19,5 +19,6 @@ namespace DiveDeepEF.Models.Bookings
         public int Days { get; set; } = 1;
         public string? SelectedSize { get; set; } 
         public string? SuitGender { get; set; }
+        public int Quantity { get; set; } = 1;
     }
 }

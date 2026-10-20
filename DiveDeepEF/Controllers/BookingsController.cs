@@ -36,7 +36,9 @@ namespace DiveDeepEF.Controllers
                     .Include(b => b.User)
                     .Include(b => b.BasketItems)
                         .ThenInclude(bi => bi.Equipment)
-                    .Where(b => b.EndDate >= now)  
+                    .Include(b => b.BasketItems)
+                        .ThenInclude(bi => bi.DivingPackage)
+                    .Where(b => b.EndDate >= now)
                     .ToListAsync();
             }
             else
@@ -46,7 +48,9 @@ namespace DiveDeepEF.Controllers
                 bookings = await _context.Bookings
                     .Include(b => b.BasketItems)
                         .ThenInclude(bi => bi.Equipment)
-                    .Where(b => b.UserId == userId && b.EndDate >= now) 
+                    .Include(b => b.BasketItems)
+                        .ThenInclude(bi => bi.DivingPackage)
+                    .Where(b => b.UserId == userId && b.EndDate >= now)
                     .ToListAsync();
             }
 
@@ -59,11 +63,18 @@ namespace DiveDeepEF.Controllers
 
             var userId = _userManager.GetUserId(User);
             var booking = await _context.Bookings
-                .Include(b => b.BasketItems)
-                    .ThenInclude(bi => bi.Equipment)
-                .FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
+                 .Include(b => b.BasketItems)
+                     .ThenInclude(bi => bi.Equipment)
+                 .Include(b => b.BasketItems)
+                     .ThenInclude(bi => bi.DivingPackage)
+                 .FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
 
             if (booking == null) return NotFound();
+
+            ViewBag.Equipment = await _context.Equipments
+                .OrderBy(e => e.Brand)
+                .ToListAsync();
+
             return View(booking);
         }
 
@@ -74,7 +85,7 @@ namespace DiveDeepEF.Controllers
             {
                 CostumerName = user?.UserName ?? "",
                 CostumerEmail = user?.Email ?? "",
-                StartDate = DateTime.Today,      
+                StartDate = DateTime.Today,
                 EndDate = DateTime.Today.AddDays(1)
             };
             return View(booking);
@@ -101,7 +112,7 @@ namespace DiveDeepEF.Controllers
             {
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = booking.Id });
             }
             return View(booking);
         }
@@ -182,6 +193,57 @@ namespace DiveDeepEF.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddItem(int bookingId, int equipmentId, int quantity = 1)
+        {
+            var userId = _userManager.GetUserId(User);
+            var booking = await _context.Bookings
+                .FirstOrDefaultAsync(b => b.Id == bookingId && b.UserId == userId);
+            if (booking == null) return NotFound();
+
+            var equipment = await _context.Equipments.FindAsync(equipmentId);
+            if (equipment == null) return NotFound();
+
+            if (booking.EndDate.Date < DateTime.Today)
+            {
+                TempData["Error"] = "Bookingen er udløbet.";
+                return RedirectToAction(nameof(Details), new { id = bookingId });
+            }
+
+            quantity = Math.Clamp(quantity, 1, 20);
+
+            // BasketItem has no quantity column, so one row per unit
+            for (var i = 0; i < quantity; i++)
+            {
+                _context.BasketItems.Add(new BasketItem
+                {
+                    BookingId = bookingId,
+                    EquipmentId = equipmentId
+                });
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { id = bookingId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveItem(int basketItemId)
+        {
+            var userId = _userManager.GetUserId(User);
+            var item = await _context.BasketItems
+                .Include(bi => bi.Booking)
+                .FirstOrDefaultAsync(bi => bi.Id == basketItemId && bi.Booking.UserId == userId);
+            if (item == null) return NotFound();
+
+            var bookingId = item.BookingId;
+            _context.BasketItems.Remove(item);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new { id = bookingId });
         }
 
         private bool BookingExists(int id)

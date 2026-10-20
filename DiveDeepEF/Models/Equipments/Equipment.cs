@@ -4,7 +4,8 @@ public abstract class Equipment
 {
 
     public int Id { get; set; }
-    public float PricePerDay { get; set; }
+    
+    public decimal PricePerDay { get; set; }
     public string Brand { get; set; }
 
 }

@@ -32,16 +32,13 @@ namespace DiveDeepEF.Services
 
             bool safe = true;
 
+            
             if (result.IsThunderstorm)
             {
                 safe = false;
+                weather.IsThunderstorm = true;
                 result.Reasons.Add("Tordenvejr: Livsfarligt - al dykning frarådes");
             }
-            else 
-            {
-                result.Reasons.Add("Der er ikke noget Tordenvejr i øjeblikket");
-            }
-
             if (result.WindSpeed.HasValue && result.WindSpeed.Value >= 8)
             {
                 safe = false;
@@ -79,7 +76,6 @@ namespace DiveDeepEF.Services
             else
             {
                 result.SuitRecommendation = "Ingen oplysninger om vandtemperatur";
-                result.Reasons.Add("Ingen oplysninger om vandtemperatur for lokationen.");
             }
 
 
@@ -92,5 +88,6 @@ namespace DiveDeepEF.Services
             var thunderstormCodes = new HashSet<int> { 95, 96, 99 };
             return thunderstormCodes.Contains(code.Value);
         }
+
     }
 }

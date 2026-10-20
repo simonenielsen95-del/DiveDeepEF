@@ -1,43 +1,45 @@
 ﻿@using DiveDeepEF.ViewModels
+@using DiveDeepEF.Services
 @model WeatherViewModel
 
 <div>
 
-    <div style="margin-top:0.5em; border:1px solid #ccc; padding:10px; border-radius:5px;">
+            <div class="form-floating mb-3">
         <form asp-controller="Weather" asp-action="Index" method="get">
-
-            <label for="locationInput">Indtast by / postnummer:</label>
+            <label for="location">Indtast By</label>
             <input type="text" id="locationInput" name="location" value="@Model.SelectedLocation" placeholder="Lars Tynskids Mark" />
+
+            </form>
+            </div>
             <button type="submit">Opdater</button>
-        </form>
+
 
         @if (!string.IsNullOrWhiteSpace(Model.SelectedLocation))
         {
             <p>Viser anbefalinger for <strong>@Model.SelectedLocation</strong></p>
 
-            @if (Model.RecommendationReasons?.Any() == true)
-            {
-                <ul class="recommendationReasons" style="padding:0;">
-                    @foreach (var reason in Model.RecommendationReasons)
-                    {
-                        <li style="color: crimson; list-style:none; margin-top:0.5em;">@reason</li>
-                    }
-                </ul>
-            }
             @if (Model.WeatherData != null)
             {
                 <div class="weatherInfo" style="margin-top:10px; padding:5px; border-top:1px dashed #ccc;">
                     <h4>Vejrdata for @Model.SelectedLocation</h4>
-                    <p><strong>Temperatur luft:</strong> @(Model.WeatherData.AirTemperature?.ToString("F1") ?? "N/A") °C</p>
-                    <p><strong>Temperatur hav:</strong> @(Model.WeatherData.SeaSurfaceTemperature?.ToString("F1") ?? "N/A") °C</p>
-                    <p><strong>Bølge højde:</strong> @(Model.WeatherData.WaveHeight?.ToString("F1") ?? "N/A") m</p>
-                    <p><strong>Nedbør:</strong> @(Model.WeatherData.Precipitation?.ToString("F1") ?? "N/A") mm</p>
-                    <p><strong>Vindhastighed:</strong> @(Model.WeatherData.WindSpeed10m?.ToString("F1") ?? "N/A") m/s</p>
+                <p class ="text-start"><strong>Temperatur luft:</strong> @(Model.WeatherData.AirTemperature?.ToString() ?? "N/A") °C</p>
+                <p class="text-start"><strong>Temperatur hav:</strong> @(Model.WeatherData.SeaSurfaceTemperature?.ToString() ?? "N/A") °C</p>
+                <p class="text-start"><strong>Bølge højde:</strong> @(Model.WeatherData.WaveHeight?.ToString() ?? "N/A") m</p>
+                <p class="text-start"><strong>Nedbør:</strong> @(Model.WeatherData.Precipitation?.ToString() ?? "N/A") mm</p>
+                <p class="text-start"><strong>Vindhastighed:</strong> @(Model.WeatherData.WindSpeed10m?.ToString() ?? "N/A") m/s</p>
+                    @if (Model.WeatherData.IsThunderstorm == true)
+                    {
+                    <p class="text-start"><strong>Tordenvejr i området.</strong></p>
+                    }
+                    else
+                    {
+                        <p class="text-start"><strong>Intet tordenvejr i området</strong></p>
+                    }
                 </div>
             }
             else if (ViewBag.CityName != null)
             {
-                <p style="color:red;">Vejr data utilgængelig for @ViewBag.CityName</p>
+                <h2 style="color:red;">Vejr data utilgængelig for @ViewBag.CityName</h2>
             }
 
         }
@@ -45,7 +47,22 @@
 
     
         <div>
-            <p>Dragtanbefaling til denne vandtemperatur: @Model.SuitRecommendation</p>
+            @if (Model.RecommendationReasons.Any() == false)
+            {
+                <h1>Vi vurdere at forholdene er egnede til at dykke her </h1>
+        <p>Vi anbefaler følgende dragt: @Model.SuitRecommendation</p>
+            }
+
+    @if (Model.RecommendationReasons?.Any() == true)
+    {
+        <h1>Vi anbefaler ikke at dykke her af følgende grunde:</h1>
+        <ul class="recommendationReasons" style="padding:0;">
+            @foreach (var reason in Model.RecommendationReasons)
+            {
+                <li style="color: crimson; list-style:none; margin-top:0.5em;">@reason</li>
+            }
+        </ul>
+    }
         </div>
     
 

@@ -9,5 +9,6 @@
         public double? WindSpeed10m { get; set; }
         public double? SeaSurfaceTemperature { get; set; }
         public double? WaveHeight { get; set; }
+        public bool IsThunderstorm { get; set; } = false;
     }
 }
